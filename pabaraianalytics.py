@@ -3,12 +3,14 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import plotly.express as px
 import plotly.io as pio
+from PIL import Image
 import io
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
-import os
- 
+from firebase_admin import auth
+import re
+
 # Menampilkan copy right di sidebar
 st.sidebar.markdown("---")
 st.sidebar.write("© Pabarai Analytics")
@@ -24,28 +26,46 @@ db = firestore.client(app)
 
 # Fungsi untuk mendaftar akun baru
 def sign_up(email, password):
-    # Periksa apakah email sudah digunakan
-    users_ref = db.collection('users')
-    query = users_ref.where('email', '==', email).limit(1).get()
-    if query:
-        return False
+    try:
+        if not email or not password:
+            st.error('Email dan password harus diisi.')
+            return False
 
-    # Simpan data pengguna ke Firebase
-    user_data = {
-        'email': email,
-        'password': password
-    }
-    db.collection('users').add(user_data)
-    return True
+        # Validasi format email
+        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+            st.error('Format email tidak valid.')
+            return False
+
+        # Periksa apakah email sudah digunakan
+        users_ref = db.collection('users')
+        query = users_ref.where('email', '==', email).limit(1).get()
+        if query:
+            st.error('Email sudah terdaftar. Gunakan email lain.')
+            return False
+
+        # Simpan data pengguna ke Firebase
+        user_data = {
+            'email': email,
+            'password': password
+        }
+        db.collection('users').add(user_data)
+        return True
+    except auth.FirebaseAuthError as error:
+        st.error(f"Error: {str(error)}")
+        return False
 
 # Fungsi untuk memeriksa kecocokan email dan password
 def sign_in(email, password):
-    # Periksa kecocokan email dan password di Firebase
-    users_ref = db.collection('users')
-    query = users_ref.where('email', '==', email).where('password', '==', password).limit(1).get()
-    if query:
-        return True
-    return False
+    try:
+        # Periksa kecocokan email dan password di Firebase
+        users_ref = db.collection('users')
+        query = users_ref.where('email', '==', email).where('password', '==', password).limit(1).get()
+        if query:
+            return True
+        return False
+    except auth.FirebaseAuthError as error:
+        st.error(f"Error: {str(error)}")
+        return False
 
 # Fungsi untuk logout
 def logout():
@@ -53,11 +73,13 @@ def logout():
     st.warning('Anda telah keluar dari akun.')
     st.experimental_rerun()
 
+# Fungsi untuk mengunduh grafik
 def download_chart(chart, filename):
-    fig = chart.to_image(format="png")
-    with open(filename, "wb") as f:
-        f.write(fig)
-    st.markdown(f'<a href="data:image/png;base64,{fig}" download="{filename}">Unduh Grafik</a>', unsafe_allow_html=True)
+    img_data = io.BytesIO()
+    pio.write_image(chart, img_data, format='png')
+    with open(filename, 'wb') as f:
+        f.write(img_data.getvalue())
+    st.download_button(label='Unduh Grafik', data=img_data, file_name=filename, mime='image/png')
 
 # Fungsi untuk menampilkan menu utama setelah login
 def show_main_menu(user):
@@ -178,36 +200,65 @@ def show_main_menu(user):
                     st.markdown("### Download Grafik")
                     download_chart(fig, 'plotly_chart.png')
 
-# Halaman login
-st.title('Login')
-email = st.text_input('Email')
-password = st.text_input('Password', type='password')
-
-# Cek jika tombol "Masuk" ditekan
-if st.button('Masuk'):
-    if sign_in(email, password):
-        st.success('Anda berhasil masuk!')
-        st.session_state['user'] = {'email': email, 'password': password}
-        show_main_menu(st.session_state['user'])
-    else:
-        st.error('Email atau password salah.')
-
-# Halaman pendaftaran
-st.title('Daftar')
-new_email = st.text_input('Email baru')
-new_password = st.text_input('Password baru', type='password')
-confirm_password = st.text_input('Konfirmasi password', type='password')
-
-# Cek jika tombol "Daftar" ditekan
-if st.button('Daftar'):
-    if new_password != confirm_password:
-        st.error('Password tidak cocok. Harap coba lagi.')
-    else:
-        if sign_up(new_email, new_password):
-            st.success('Akun berhasil didaftarkan!')
+# Fungsi untuk tampilan awal
+def show_login_page():
+    st.subheader('Halaman Login')
+    email = st.text_input('Email')
+    password = st.text_input('Password', type='password')
+    if st.button('Login'):
+        if sign_in(email, password):
+            st.success('Login berhasil.')
+            user_data = {
+                'email': email,
+                'password': password
+            }
+            st.session_state['user'] = user_data
+            show_main_menu(user_data)
         else:
-            st.error('Email sudah digunakan. Harap gunakan email lain.')
+            st.error('Login gagal. Email atau password salah.')
 
-# Cek jika pengguna sudah login
-if 'user' in st.session_state:
-    show_main_menu(st.session_state['user'])
+# Fungsi untuk tampilan pendaftaran
+def show_signup_page():
+    st.subheader('Halaman Pendaftaran')
+    email = st.text_input('Email')
+    password = st.text_input('Password', type='password')
+    confirm_password = st.text_input('Konfirmasi Password', type='password')
+    if st.button('Daftar'):
+        if password == confirm_password:
+            if sign_up(email, password):
+                st.success('Pendaftaran berhasil. Silakan login.')
+            else:
+                st.error('Email sudah digunakan. Silakan gunakan email lain.')
+        else:
+            st.error('Konfirmasi password tidak cocok.')
+
+# Fungsi utama
+def main():
+    st.title('Visualize Your Data with Ease')
+    st.write('Effortless Data Visualization: Seamlessly Generate Line, Bar, Histogram, and Plotly Charts from CSV Uploads')
+    st.markdown(
+    """
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    </style>
+    """,
+    unsafe_allow_html=True
+    )
+
+    st.sidebar.title('Menu')
+    user = st.session_state.get('user')
+
+    if user is None:
+        menu = st.sidebar.radio('Navigasi', ['Login', 'Daftar'])
+
+        if menu == 'Login':
+            show_login_page()
+        elif menu == 'Daftar':
+            show_signup_page()
+    else:
+        show_main_menu(user)
+
+# Menjalankan aplikasi
+if __name__ == '__main__':
+    main()
