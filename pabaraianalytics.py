@@ -169,10 +169,9 @@ def show_main_menu(user):
                     # Menampilkan histogram di layar menggunakan st.pyplot()
                     st.pyplot(fig)
 
-                    # Save the figure to a BytesIO object
-                    img_buffer = io.BytesIO()
-                    plt.savefig(img_buffer, format='png')
-                    img_buffer.seek(0)
+                    # Mengunduh grafik
+                    st.markdown("### Download Grafik")
+                    download_chart(fig, 'histogram.png')
 
 
         elif chart_type == 'Plotly Chart':
