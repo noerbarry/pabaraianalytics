@@ -6,20 +6,22 @@ Effortless Data Visualization: Seamlessly Generate Line, Bar, Histogram, and Plo
 This is a Streamlit application that allows you to visualize your data using various types of charts. You can upload a CSV file and select the type of chart you want to generate.
 
 ## Prerequisites
+
 Before running the application, make sure you have the following dependencies installed:
 
-Streamlit
-Matplotlib
-Pandas
-Plotly Express
-Pillow
-Firebase Admin SDK
-re (regular expression module)
+- Streamlit
+- Matplotlib
+- Pandas
+- Plotly Express
+- Pillow
+- Firebase Admin SDK
+- re (regular expression module)
+
 You can install the dependencies by running the following command:
 
-bash
-Copy code
+```bash
 pip install streamlit matplotlib pandas plotly Pillow firebase-admin
+ 
 ## Firebase Setup
 To use the Firebase authentication and database functionality, you need to set up a Firebase project and obtain the service account credentials. Follow the steps below to set up Firebase:
 
