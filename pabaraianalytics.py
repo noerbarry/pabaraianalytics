@@ -14,7 +14,7 @@ import os
 from firebase_admin import credentials
 import base64
 import plotly.graph_objects as go
-
+ 
 # Menampilkan copy right di sidebar
 st.sidebar.markdown("---")
 st.sidebar.write("© Pabarai Analytics")
