@@ -103,7 +103,7 @@ def show_main_menu(user):
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
             if uploaded_file is not None:
                 #data = pd.read_csv(uploaded_file)
-                data = pd.read_csv(uploaded_file, delimiter=',')
+                data = pd.read_csv(uploaded_file, delimiter=';')
 
                 st.dataframe(data)
 
