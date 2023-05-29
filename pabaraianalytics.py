@@ -189,27 +189,29 @@ def show_main_menu(user):
                         mime="image/png"
                     )
 
-          elif chart_type == 'Plotly Chart':
-              st.subheader('Plotly Chart')
-              uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
-              if uploaded_file is not None:
-                  data = pd.read_csv(uploaded_file)
-                  st.dataframe(data)
+          
+        elif chart_type == 'Plotly Chart':
+            st.subheader('Plotly Chart')
+            uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
+            if uploaded_file is not None:
+                data = pd.read_csv(uploaded_file)
+                st.dataframe(data)
 
-                  x_column = st.selectbox('Pilih Kolom X', data.columns)
-                  y_column = st.selectbox('Pilih Kolom Y', data.columns)
+                x_column = st.selectbox('Pilih Kolom X', data.columns)
+                y_column = st.selectbox('Pilih Kolom Y', data.columns)
 
-                  # Jika tombol "Tampilkan Grafik" ditekan
-                  if st.button('Tampilkan Grafik'):
-                      # Membuat grafik menggunakan Plotly Express
-                      fig = px.scatter(data, x=x_column, y=y_column)
+                # Jika tombol "Tampilkan Grafik" ditekan
+                if st.button('Tampilkan Grafik'):
+                    # Membuat grafik menggunakan Plotly Express
+                    fig = px.scatter(data, x=x_column, y=y_column)
 
-                      # Menampilkan grafik di layar menggunakan st.plotly_chart()
-                      st.plotly_chart(fig)
+                    # Menampilkan grafik di layar menggunakan st.plotly_chart()
+                    st.plotly_chart(fig)
 
-                      # Mengunduh grafik
-                      st.markdown("### Download Grafik")
-                      download_chart(fig, 'plotly_chart.png')
+                    # Mengunduh grafik
+                    st.markdown("### Download Grafik")
+                    download_chart(fig, 'plotly_chart.png')
+
 
 # Fungsi untuk tampilan awal
 def show_login_page():
