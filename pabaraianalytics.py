@@ -80,9 +80,10 @@ def logout():
 def download_chart(chart, filename):
     img_data = io.BytesIO()
     pio.write_image(chart, img_data, format='png')
-    with open(filename, 'wb') as f:
-        f.write(img_data.getvalue())
-    st.download_button(label='Unduh Grafik', data=img_data, file_name=filename, mime='image/png')
+    img_data.seek(0)
+    encoded_img_data = base64.b64encode(img_data.read()).decode()
+    href = f'<a href="data:image/png;base64,{encoded_img_data}" download="{filename}">Unduh Grafik</a>'
+    st.markdown(href, unsafe_allow_html=True)
 
 # Fungsi untuk menampilkan menu utama setelah login
 def show_main_menu(user):
