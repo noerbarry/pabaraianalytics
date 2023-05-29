@@ -78,7 +78,7 @@ def download_chart(chart, filename):
     fig = chart.to_image(format="png")
     with open(filename, "wb") as f:
         f.write(fig)
-    st.markdown(f'<a href="data:image/png;base64,{fig}" download="{filename}">Unduh Grafik</a>', unsafe_allow_html=True)
+    st.download_button(f'<a href="data:image/png;base64,{fig}" download="{filename}">Unduh Grafik</a>', unsafe_allow_html=True)
 
     
 # Fungsi untuk menampilkan menu utama setelah login
