@@ -34,8 +34,7 @@ Save the downloaded JSON file to the same directory as the application code and 
 To run the application, execute the following command:
 
 ```bash
-Copy code
-streamlit run your_script.py
+streamlit run pabaraianalytics.py
 Replace your_script.py with the filename of the script containing the code provided above.
 ```
 
