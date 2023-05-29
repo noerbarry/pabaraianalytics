@@ -12,7 +12,7 @@ from firebase_admin import auth
 import re
 import os
 from firebase_admin import credentials
-
+import base64
 
 # Menampilkan copy right di sidebar
 st.sidebar.markdown("---")
