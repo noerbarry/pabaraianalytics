@@ -1,6 +1,6 @@
 # pabaraianalytics
 
-Visualize Your Data with Ease
+##Visualize Your Data with Ease
 Effortless Data Visualization: Seamlessly Generate Line, Bar, Histogram, and Plotly Charts from CSV Uploads
 
 This is a Streamlit application that allows you to visualize your data using various types of charts. You can upload a CSV file and select the type of chart you want to generate.
@@ -32,7 +32,7 @@ To run the application, execute the following command:
 
 bash
 Copy code
-streamlit run pabaraianalytics.py
+streamlit run your_script.py
 Replace your_script.py with the filename of the script containing the code provided above.
 
 Usage
