@@ -148,7 +148,8 @@ def show_main_menu(user):
                     st.markdown("### Download Grafik")
                     download_chart(fig, 'bar_chart.png')
                     
-     elif chart_type == 'Histogram':
+  
+        elif chart_type == 'Histogram':
             st.subheader('Histogram')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
             if uploaded_file is not None:
