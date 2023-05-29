@@ -187,7 +187,8 @@ def show_main_menu(user):
                         file_name="histogram.png",
                         mime="image/png"
                     )
-   elif chart_type == 'Plotly Chart':
+   
+        elif chart_type == 'Plotly Chart':
             st.subheader('Plotly Chart')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
             if uploaded_file is not None:
