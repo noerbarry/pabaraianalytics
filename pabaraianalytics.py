@@ -116,8 +116,8 @@ def show_main_menu(user):
                     st.plotly_chart(fig)
 
                     # Mengunduh grafik
-                     st.markdown(f'<a href="data:image/png;base64,{img_data}" download="{filename}">Unduh Grafik</a>', unsafe_allow_html=True)
- 
+                    st.markdown("### Download Grafik")
+                    download_chart(fig, 'line_chart.png')
 
         elif chart_type == 'Bar Chart':
             st.subheader('Grafik Batang')
@@ -138,8 +138,9 @@ def show_main_menu(user):
                     st.plotly_chart(fig)
 
                     # Mengunduh grafik
-                    st.markdown(f'<a href="data:image/png;base64,{img_data}" download="{filename}">Unduh Grafik</a>', unsafe_allow_html=True)
- 
+                    st.markdown("### Download Grafik")
+                    download_chart(fig, 'bar_chart.png')
+
         elif chart_type == 'Histogram':
             st.subheader('Histogram')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
@@ -199,8 +200,8 @@ def show_main_menu(user):
                     st.plotly_chart(fig)
 
                     # Mengunduh grafik
-                    st.markdown(f'<a href="data:image/png;base64,{img_data}" download="{filename}">Unduh Grafik</a>', unsafe_allow_html=True)
- 
+                    st.markdown("### Download Grafik")
+                    download_chart(fig, 'plotly_chart.png')
 
 # Fungsi untuk tampilan awal
 def show_login_page():
