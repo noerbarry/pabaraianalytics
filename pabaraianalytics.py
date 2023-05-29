@@ -7,13 +7,18 @@ import io
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
-
+import os
+ 
 # Menampilkan copy right di sidebar
 st.sidebar.markdown("---")
 st.sidebar.write("© Pabarai Analytics")
 
 # Inisialisasi aplikasi Firebase 
-cred = credentials.Certificate('pabarstreamlit-firebase-adminsdk-mudcv-c79709c9ca.json')
+# Specify the full path to the service account key file
+service_account_path = 'pabaranalytics-firebase-adminsdk-th0qb-1efdb39cf3.json'
+
+# Initialize Firebase credentials
+cred = credentials.Certificate(service_account_path)
  
 try:
     app = firebase_admin.get_app("pabar")
