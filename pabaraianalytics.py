@@ -156,23 +156,15 @@ def show_main_menu(user):
 
                 column = st.selectbox('Pilih Kolom', data.columns)
 
-                # Jika tombol "Tampilkan Histogram" ditekan
-                if st.button('Tampilkan Histogram'):
-                    hist_data = data[column].tolist()
+            # Jika tombol "Tampilkan Histogram" ditekan
+               if st.button('Tampilkan Histogram'):
+                   hist_data = data[column].tolist()
 
-                    # Membuat objek Figure dan Axes
-                    fig, ax = plt.subplots(figsize=(8, 6))
+                   # Membuat grafik histogram menggunakan Plotly Express
+                   fig = px.histogram(hist_data)
 
-                    # Plot histogram pada Axes
-                    ax.hist(hist_data, bins='auto', color='blue', alpha=0.7)
-
-                    # Set label dan judul pada Axes
-                    ax.set_xlabel('Data')
-                    ax.set_ylabel('Frequency')
-                    ax.set_title('Histogram')
-
-                    # Menampilkan histogram di layar menggunakan st.pyplot()
-                    st.plotly_chart(fig, use_container_width=True)
+                   # Menampilkan grafik histogram di layar menggunakan st.plotly_chart()
+                   st.plotly_chart(fig)
 
 
                     # Mengunduh grafik
