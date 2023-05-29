@@ -78,8 +78,10 @@ def logout():
 
 # Fungsi untuk mengunduh grafik
 def download_chart(chart, filename):
+    # Convert the matplotlib Figure object to a Plotly Figure object
+    fig = go.Figure(chart)
     img_data = io.BytesIO()
-    pio.write_image(chart, img_data, format='png')
+    pio.write_image(fig, img_data, format='png')
     img_data.seek(0)
     encoded_img_data = base64.b64encode(img_data.read()).decode()
     href = f'<a href="data:image/png;base64,{encoded_img_data}" download="{filename}">Unduh Grafik</a>'
