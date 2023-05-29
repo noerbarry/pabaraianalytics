@@ -146,8 +146,8 @@ def show_main_menu(user):
                     # Mengunduh grafik
                     st.markdown("### Download Grafik")
                     download_chart(fig, 'bar_chart.png')
-
-        elif chart_type == 'Histogram':
+                    
+       elif chart_type == 'Histogram':
             st.subheader('Histogram')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
             if uploaded_file is not None:
@@ -156,20 +156,36 @@ def show_main_menu(user):
 
                 column = st.selectbox('Pilih Kolom', data.columns)
 
-            # Jika tombol "Tampilkan Histogram" ditekan
-               if st.button('Tampilkan Histogram'):
-                   hist_data = data[column].tolist()
+                # Jika tombol "Tampilkan Histogram" ditekan
+                if st.button('Tampilkan Histogram'):
+                    hist_data = data[column].tolist()
 
-                   # Membuat grafik histogram menggunakan Plotly Express
-                   fig = px.histogram(hist_data)
+                    # Membuat objek Figure dan Axes
+                    fig, ax = plt.subplots(figsize=(8, 6))
 
-                   # Menampilkan grafik histogram di layar menggunakan st.plotly_chart()
-                   st.plotly_chart(fig)
+                    # Plot histogram pada Axes
+                    ax.hist(hist_data, bins='auto', color='blue', alpha=0.7)
 
+                    # Set label dan judul pada Axes
+                    ax.set_xlabel('Data')
+                    ax.set_ylabel('Frequency')
+                    ax.set_title('Histogram')
 
-                    # Mengunduh grafik
-                    st.markdown("### Download Grafik")
-                    download_chart(fig, 'bar_chart.png')
+                    # Menampilkan histogram di layar menggunakan st.pyplot()
+                    st.pyplot(fig)
+
+                    # Save the figure to a BytesIO object
+                    img_buffer = io.BytesIO()
+                    plt.savefig(img_buffer, format='png')
+                    img_buffer.seek(0)
+
+                    # Create a download button for the histogram image
+                    st.download_button(
+                        label="Download Histogram",
+                        data=img_buffer,
+                        file_name="histogram.png",
+                        mime="image/png"
+                    )
 
         elif chart_type == 'Plotly Chart':
             st.subheader('Plotly Chart')
