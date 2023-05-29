@@ -14,9 +14,11 @@ import re
 # Menampilkan copy right di sidebar
 st.sidebar.markdown("---")
 st.sidebar.write("© Pabarai Analytics")
+# Specify the full path to the service account key file
+service_account_path = 'pabaranalytics-firebase-adminsdk-th0qb-1efdb39cf3.json'
 
 # Inisialisasi aplikasi Firebase
-cred = credentials.Certificate('pabaranalytics-firebase-adminsdk-th0qb-1efdb39cf3.json')  # Ganti dengan path ke serviceAccountKey.json Anda
+cred = credentials.Certificate(service_account_path)
 
 try:
     app = firebase_admin.get_app("pabar")
