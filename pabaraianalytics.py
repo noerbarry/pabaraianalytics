@@ -148,44 +148,40 @@ def show_main_menu(user):
                     st.markdown("### Download Grafik")
                     download_chart(fig, 'bar_chart.png')
                     
-  
      elif chart_type == 'Histogram':
-    st.subheader('Histogram')
-    uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
-    if uploaded_file is not None:
-        data = pd.read_csv(uploaded_file)
-        st.dataframe(data)
+      st.subheader('Histogram')
+      uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
+      if uploaded_file is not None:
+          data = pd.read_csv(uploaded_file)
+          st.dataframe(data)
 
-        column = st.selectbox('Pilih Kolom', data.columns)
+          column = st.selectbox('Pilih Kolom', data.columns)
 
-        # Jika tombol "Tampilkan Histogram" ditekan
-        if st.button('Tampilkan Histogram'):
-            hist_data = data[column].tolist()
+          # Jika tombol "Tampilkan Histogram" ditekan
+          if st.button('Tampilkan Histogram'):
+              hist_data = data[column].tolist()
 
-            # Membuat objek Figure dan Axes
-            fig, ax = plt.subplots(figsize=(8, 6))
+              # Membuat objek Figure dan Axes
+              fig, ax = plt.subplots(figsize=(8, 6))
 
-            # Plot histogram pada Axes
-            ax.hist(hist_data, bins='auto', color='blue', alpha=0.7)
+              # Plot histogram pada Axes
+              ax.hist(hist_data, bins='auto', color='blue', alpha=0.7)
 
-            # Set label dan judul pada Axes
-            ax.set_xlabel('Data')
-            ax.set_ylabel('Frequency')
-            ax.set_title('Histogram')
+              # Set label dan judul pada Axes
+              ax.set_xlabel('Data')
+              ax.set_ylabel('Frequency')
+              ax.set_title('Histogram')
 
-            # Menampilkan histogram di layar menggunakan st.pyplot()
-            st.pyplot(fig)
+              # Menampilkan histogram di layar menggunakan st.pyplot()
+              st.pyplot(fig)
 
-            # Save the figure to a BytesIO object
-            img_buffer = io.BytesIO()
-            plt.savefig(img_buffer, format='png')
-            img_buffer.seek(0)
+              # Save the figure to a BytesIO object
+              img_buffer = io.BytesIO()
+              plt.savefig(img_buffer, format='png')
+              img_buffer.seek(0)
 
-            # Generate a download link for the histogram image
-            st.markdown(f'<a href="data:image/png;base64,{base64.b64encode(img_buffer.read()).decode()}" download="histogram.png">Download Histogram</a>', unsafe_allow_html=True)
-
-
-          
+              # Generate a download link for the histogram image
+              st.markdown(f'<a href="data:image/png;base64,{base64.b64encode(img_buffer.read()).decode()}" download="histogram.png">Download Histogram</a>', unsafe_allow_html=True)
         elif chart_type == 'Plotly Chart':
             st.subheader('Plotly Chart')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
