@@ -14,7 +14,7 @@ st.sidebar.write("© Pabarai Analytics")
 
 # Inisialisasi aplikasi Firebase
 cred = credentials.Certificate('pabarstreamlit-firebase-adminsdk-mudcv-c79709c9ca.json')  # Ganti dengan path ke serviceAccountKey.json Anda
-
+ 
 try:
     app = firebase_admin.get_app("pabar")
 except ValueError:  # Jika aplikasi "pabar" belum diinisialisasi sebelumnya
