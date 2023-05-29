@@ -174,14 +174,6 @@ def show_main_menu(user):
                     plt.savefig(img_buffer, format='png')
                     img_buffer.seek(0)
 
-                 # Create a download button for the histogram image
-                    st.download_button(
-                        label="Download Histogram",
-                        data=img_buffer,
-                        file_name="histogram.png",
-                        mime="image/png;base64,{encoded_img_data}"
-                    )
-
 
         elif chart_type == 'Plotly Chart':
             st.subheader('Plotly Chart')
