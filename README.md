@@ -18,9 +18,8 @@ Before running the application, make sure you have the following dependencies in
 - re (regular expression module)
 
 You can install the dependencies by running the following command:
-
-```bash
 pip install streamlit matplotlib pandas plotly Pillow firebase-admin
+
  
 ## Firebase Setup
 To use the Firebase authentication and database functionality, you need to set up a Firebase project and obtain the service account credentials. Follow the steps below to set up Firebase:
