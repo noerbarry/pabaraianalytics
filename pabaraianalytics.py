@@ -11,6 +11,7 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 from firebase_admin import auth
 import re
+import base64
 
 # Menampilkan copy right di sidebar
 st.sidebar.markdown("---")
