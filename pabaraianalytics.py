@@ -79,8 +79,7 @@ def download_chart(chart, filename):
     pio.write_image(chart, img_data, format='png')
     with open(filename, 'wb') as f:
         f.write(img_data.getvalue())
-    st.download_button(label='Unduh Grafik', data=img_data, file_name=filename, mime='image/png')
-
+    st.download_button(label='Unduh Grafik', data=img_data, file_name=filename, mime='image/png';base64,{fig})
     
 # Fungsi untuk menampilkan menu utama setelah login
 def show_main_menu(user):
