@@ -102,7 +102,9 @@ def show_main_menu(user):
             st.subheader('Grafik Line')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
             if uploaded_file is not None:
-                data = pd.read_csv(uploaded_file)
+                #data = pd.read_csv(uploaded_file)
+                data = pd.read_csv(uploaded_file, delimiter=',')
+
                 st.dataframe(data)
 
                 x_column = st.selectbox('Pilih Kolom X', data.columns)
