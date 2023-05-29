@@ -117,7 +117,7 @@ def show_main_menu(user):
                     fig = px.line(data, x=x_column, y=y_column)
 
                     # Menampilkan grafik line di layar menggunakan st.plotly_chart()
-                    st.plotly_chart(fig)
+                    st.plotly_chart(fig, use_container_width=True)
 
                     # Mengunduh grafik
                     st.markdown("### Download Grafik")
