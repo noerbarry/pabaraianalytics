@@ -14,6 +14,8 @@ import os
 from firebase_admin import credentials
 import base64
 import plotly.graph_objects as go
+import plotly.express as px
+
  
 # Menampilkan copy right di sidebar
 st.sidebar.markdown("---")
