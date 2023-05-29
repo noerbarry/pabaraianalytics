@@ -29,13 +29,15 @@ Go to the Firebase Console and create a new project.
 In the project settings, navigate to the "Service Accounts" tab.
 Click on the "Generate new private key" button to download the service account credentials file in JSON format.
 Save the downloaded JSON file to the same directory as the application code and rename it to pabaranalytics-firebase-adminsdk-th0qb-1efdb39cf3.json (or update the cred = credentials.Certificate('pabaranalytics-firebase-adminsdk-th0qb-1efdb39cf3.json') line in the code with the correct file path).
-Running the Application
+
+## Running the Application
 To run the application, execute the following command:
 
-bash
+```bash
 Copy code
 streamlit run your_script.py
 Replace your_script.py with the filename of the script containing the code provided above.
+```
 
 ## Usage
 Once the application is running, you will see the main page with the title "Visualize Your Data with Ease" and a description of the application.
