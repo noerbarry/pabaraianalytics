@@ -176,13 +176,10 @@ def show_main_menu(user):
                     plt.savefig(img_buffer, format='png')
                     img_buffer.seek(0)
 
-                    # Create a download button for the histogram image
-                    st.download_button(
-                        label="Download Histogram",
-                        data=img_buffer,
-                        file_name="histogram.png",
-                        mime="image/png"
-                    )
+                   st.download_button(label='Unduh Grafik', data=img_data, file_name=filename, mime='image/png')
+                   encoded_img_data = base64.b64encode(img_data.getvalue()).decode()
+                   href = f'<a href="data:image/png;base64,{encoded_img_data}" download="{filename}">Unduh Grafik</a>'st.write(href, unsafe_allow_html=True)
+ 
 
         elif chart_type == 'Plotly Chart':
             st.subheader('Plotly Chart')
