@@ -170,7 +170,8 @@ def show_main_menu(user):
                     ax.set_title('Histogram')
 
                     # Menampilkan histogram di layar menggunakan st.pyplot()
-                    st.pyplot(fig)
+                    st.plotly_chart(fig, use_container_width=True)
+
 
                     # Mengunduh grafik
                     st.markdown("### Download Grafik")
