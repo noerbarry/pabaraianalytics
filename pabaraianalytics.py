@@ -12,7 +12,7 @@ from firebase_admin import firestore
 st.sidebar.markdown("---")
 st.sidebar.write("© Pabarai Analytics")
 
-# Inisialisasi aplikasi Firebase
+# Inisialisasi aplikasi Firebase 
 cred = credentials.Certificate('pabarstreamlit-firebase-adminsdk-mudcv-c79709c9ca.json')
  
 try:
