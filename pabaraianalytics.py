@@ -1,5 +1,5 @@
 import streamlit as st
-import matplotlib.pyplot as plt
+import plotly.express as px
 import pandas as pd
 import plotly.express as px
 import plotly.io as pio
@@ -10,7 +10,14 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 from firebase_admin import auth
 import re
+import os
+from firebase_admin import credentials
+import base64
+import plotly.graph_objects as go
+import plotly.express as px
+import matplotlib.pyplot as plt
 
+ 
 # Menampilkan copy right di sidebar
 st.sidebar.markdown("---")
 st.sidebar.write("© Pabarai Analytics")
@@ -75,11 +82,14 @@ def logout():
 
 # Fungsi untuk mengunduh grafik
 def download_chart(chart, filename):
+    # Convert the matplotlib Figure object to a Plotly Figure object
+    fig = go.Figure(chart)
     img_data = io.BytesIO()
-    pio.write_image(chart, img_data, format='png')
-    with open(filename, 'wb') as f:
-        f.write(img_data.getvalue())
-    st.download_button(label='Unduh Grafik', data=img_data, file_name=filename, mime='image/png')
+    pio.write_image(fig, img_data, format='png')
+    img_data.seek(0)
+    encoded_img_data = base64.b64encode(img_data.read()).decode()
+    href = f'<a href="data:image/png;base64,{encoded_img_data}" download="{filename}">Unduh Grafik</a>'
+    st.write(href, unsafe_allow_html=True)
 
 # Fungsi untuk menampilkan menu utama setelah login
 def show_main_menu(user):
@@ -110,7 +120,7 @@ def show_main_menu(user):
                     fig = px.line(data, x=x_column, y=y_column)
 
                     # Menampilkan grafik line di layar menggunakan st.plotly_chart()
-                    st.plotly_chart(fig)
+                    st.plotly_chart(fig, use_container_width=True)
 
                     # Mengunduh grafik
                     st.markdown("### Download Grafik")
@@ -137,8 +147,8 @@ def show_main_menu(user):
                     # Mengunduh grafik
                     st.markdown("### Download Grafik")
                     download_chart(fig, 'bar_chart.png')
-
-        elif chart_type == 'Histogram':
+                    
+    elif chart_type == 'Histogram':
             st.subheader('Histogram')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
             if uploaded_file is not None:
@@ -177,7 +187,7 @@ def show_main_menu(user):
                         file_name="histogram.png",
                         mime="image/png"
                     )
-
+   
         elif chart_type == 'Plotly Chart':
             st.subheader('Plotly Chart')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
@@ -199,6 +209,7 @@ def show_main_menu(user):
                     # Mengunduh grafik
                     st.markdown("### Download Grafik")
                     download_chart(fig, 'plotly_chart.png')
+
 
 # Fungsi untuk tampilan awal
 def show_login_page():
