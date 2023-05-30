@@ -1,8 +1,9 @@
 import streamlit as st
-import plotly.express as px
+import matplotlib.pyplot as plt
 import pandas as pd
 import plotly.express as px
 import plotly.io as pio
+import plotly.graph_objects as go
 from PIL import Image
 import io
 import firebase_admin
@@ -10,14 +11,8 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 from firebase_admin import auth
 import re
-import os
-from firebase_admin import credentials
 import base64
-import plotly.graph_objects as go
-import plotly.express as px
-import matplotlib.pyplot as plt
 
- 
 # Menampilkan copy right di sidebar
 st.sidebar.markdown("---")
 st.sidebar.write("© Pabarai Analytics")
@@ -82,15 +77,14 @@ def logout():
 
 # Fungsi untuk mengunduh grafik
 def download_chart(chart, filename):
-    # Convert the matplotlib Figure object to a Plotly Figure object
-    fig = go.Figure(chart)
     img_data = io.BytesIO()
-    pio.write_image(fig, img_data, format='png')
+    chart.write_image(img_data, format='png')
     img_data.seek(0)
-    encoded_img_data = base64.b64encode(img_data.read()).decode()
+
+    encoded_img_data = base64.b64encode(img_data.getvalue()).decode()
     href = f'<a href="data:image/png;base64,{encoded_img_data}" download="{filename}">Unduh Grafik</a>'
     st.write(href, unsafe_allow_html=True)
-
+    
 # Fungsi untuk menampilkan menu utama setelah login
 def show_main_menu(user):
     st.subheader('Menu Utama')
@@ -108,7 +102,8 @@ def show_main_menu(user):
             st.subheader('Grafik Line')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
             if uploaded_file is not None:
-                data = pd.read_csv(uploaded_file)
+                data = pd.read_csv(uploaded_file, delimiter=';')
+
                 st.dataframe(data)
 
                 x_column = st.selectbox('Pilih Kolom X', data.columns)
@@ -120,7 +115,7 @@ def show_main_menu(user):
                     fig = px.line(data, x=x_column, y=y_column)
 
                     # Menampilkan grafik line di layar menggunakan st.plotly_chart()
-                    st.plotly_chart(fig, use_container_width=True)
+                    st.plotly_chart(fig)
 
                     # Mengunduh grafik
                     st.markdown("### Download Grafik")
@@ -130,7 +125,7 @@ def show_main_menu(user):
             st.subheader('Grafik Batang')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
             if uploaded_file is not None:
-                data = pd.read_csv(uploaded_file)
+                data = pd.read_csv(uploaded_file, delimiter=';')
                 st.dataframe(data)
 
                 x_column = st.selectbox('Pilih Kolom X', data.columns)
@@ -147,12 +142,12 @@ def show_main_menu(user):
                     # Mengunduh grafik
                     st.markdown("### Download Grafik")
                     download_chart(fig, 'bar_chart.png')
-                    
-    elif chart_type == 'Histogram':
+
+        elif chart_type == 'Histogram':
             st.subheader('Histogram')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
             if uploaded_file is not None:
-                data = pd.read_csv(uploaded_file)
+                data = pd.read_csv(uploaded_file, delimiter=';')
                 st.dataframe(data)
 
                 column = st.selectbox('Pilih Kolom', data.columns)
@@ -180,19 +175,12 @@ def show_main_menu(user):
                     plt.savefig(img_buffer, format='png')
                     img_buffer.seek(0)
 
-                    # Create a download button for the histogram image
-                    st.download_button(
-                        label="Download Histogram",
-                        data=img_buffer,
-                        file_name="histogram.png",
-                        mime="image/png"
-                    )
-   
+
         elif chart_type == 'Plotly Chart':
             st.subheader('Plotly Chart')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
             if uploaded_file is not None:
-                data = pd.read_csv(uploaded_file)
+                data = pd.read_csv(uploaded_file, delimiter=';')
                 st.dataframe(data)
 
                 x_column = st.selectbox('Pilih Kolom X', data.columns)
@@ -209,7 +197,6 @@ def show_main_menu(user):
                     # Mengunduh grafik
                     st.markdown("### Download Grafik")
                     download_chart(fig, 'plotly_chart.png')
-
 
 # Fungsi untuk tampilan awal
 def show_login_page():
