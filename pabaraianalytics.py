@@ -194,8 +194,8 @@ def show_main_menu(user):
              if filter_column:
                   filter_value = st.text_input('Masukkan Nilai Filter')
                   filtered_data = data[data[filter_column] == filter_value]
-                  else:
-                      filtered_data = data
+                else:
+                filtered_data = data
 
              # Membuat matriks data heatmap
              heatmap_data = filtered_data.pivot_table(values=value_column, index=y_column, columns=x_column)
