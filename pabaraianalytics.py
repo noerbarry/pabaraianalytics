@@ -196,8 +196,7 @@ def show_main_menu(user):
 
                     # Mengunduh grafik
                     st.markdown("### Download Grafik")
-                    download_chart(fig, 'plotly_chart.png')
-                    
+                    download_chart(fig, 'plotly_chart.png')                    
    elif chart_type == 'Heatmap':
     st.subheader('Heatmap')
     uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
@@ -212,7 +211,7 @@ def show_main_menu(user):
         if st.button('Tampilkan Grafik'):
             # Membuat heatmap menggunakan seaborn
             sns.heatmap(correlation, annot=True, cmap='coolwarm')
-            st.pyplot()
+            st.pyplot(fig)
                  
 
 # Fungsi untuk tampilan awal
