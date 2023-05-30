@@ -174,6 +174,49 @@ def show_main_menu(user):
                     img_buffer = io.BytesIO()
                     plt.savefig(img_buffer, format='png')
                     img_buffer.seek(0)
+        elif chart_type == 'Heatmap':
+            st.subheader('Heatmap')
+
+            uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
+            if uploaded_file is not None:
+                data = pd.read_csv(uploaded_file, delimiter=';')
+                st.dataframe(data)
+
+                x_column = st.selectbox('Pilih Kolom untuk Sumbu X', data.columns)
+                y_column = st.selectbox('Pilih Kolom untuk Sumbu Y', data.columns)
+                value_column = st.selectbox('Pilih Kolom untuk Nilai', data.columns)
+
+                # Filter opsional
+                filter_column = st.selectbox('Pilih Kolom untuk Filter (Opsional)', data.columns)
+
+                if filter_column:
+                    filter_value = st.text_input('Masukkan Nilai Filter')
+                    filtered_data = data[data[filter_column] == filter_value]
+                else:
+                    filtered_data = data
+
+                heatmap_data = filtered_data[[x_column, y_column, value_column]].values.tolist()
+
+                (
+                    HeatMap()
+                    .add_xaxis(Faker.choose())
+                    .add_yaxis("Series 1", Faker.values())
+                    .set_global_opts(
+                        title_opts=opts.TitleOpts(title="Heatmap"),
+                        visualmap_opts=opts.VisualMapOpts(),
+                    )
+                    .render("heatmap.html")
+                )
+
+                # Menampilkan heatmap menggunakan ECharts
+                st.components.v1.html(open("heatmap.html", 'r').read(), height=600)
+
+                # Mengunduh grafik
+                st.markdown("### Download Grafik")
+                st.markdown(
+                    f'<a href="heatmap.html" download="heatmap.html">Unduh Grafik</a>',
+                    unsafe_allow_html=True
+                )
         
         elif chart_type == 'Plotly Chart':
             st.subheader('Plotly Chart')
