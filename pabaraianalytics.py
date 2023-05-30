@@ -174,6 +174,9 @@ def show_main_menu(user):
                     img_buffer = io.BytesIO()
                     plt.savefig(img_buffer, format='png')
                     img_buffer.seek(0)
+        
+        # Asumsi 'data' sudah didefinisikan dan diberikan nilai sebelum blok kondisional
+
         elif chart_type == 'Heatmap':
             st.subheader('Heatmap')
 
@@ -210,7 +213,6 @@ def show_main_menu(user):
             st.markdown("### Download Grafik")
             download_chart(fig, 'heatmap.png')
 
-     
         elif chart_type == 'Plotly Chart':
             st.subheader('Plotly Chart')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
