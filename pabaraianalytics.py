@@ -178,7 +178,7 @@ def show_main_menu(user):
                     plt.savefig(img_buffer, format='png')
                     img_buffer.seek(0)
 
-       elif chart_type == 'Heatmap':
+        elif chart_type == 'Heatmap':
             st.subheader('Heatmap')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
             if uploaded_file is not None:
@@ -214,6 +214,7 @@ def show_main_menu(user):
                     fig.savefig(img_buffer, format='png')
                     img_buffer.seek(0)
                     download_chart(img_buffer.getvalue(), 'heatmap.png')
+
 
         elif chart_type == 'Plotly Chart':
             st.subheader('Plotly Chart')
