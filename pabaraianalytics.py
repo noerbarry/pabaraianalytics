@@ -177,7 +177,40 @@ def show_main_menu(user):
                     img_buffer = io.BytesIO()
                     plt.savefig(img_buffer, format='png')
                     img_buffer.seek(0)
-        
+
+        elif chart_type == 'Heatmap':
+            st.subheader('Heatmap')
+            uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
+            if uploaded_file is not None:
+                data = pd.read_csv(uploaded_file, delimiter=';')
+                st.dataframe(data)
+
+                x_column = st.selectbox('Pilih Kolom X', data.columns)
+                y_column = st.selectbox('Pilih Kolom Y', data.columns)
+                value_column = st.selectbox('Pilih Kolom Nilai', data.columns)
+
+                # Jika tombol "Tampilkan Grafik" ditekan
+                if st.button('Tampilkan Grafik'):
+                    # Membuat objek HeatMap
+                    heatmap = HeatMap()
+
+                    # Mengatur data HeatMap
+                    heatmap.add_xaxis(data[x_column].tolist())
+                    heatmap.add_yaxis("", data[y_column].tolist(), data[value_column].tolist(), label_opts=opts.LabelOpts(is_show=True))
+
+                    # Mengatur opsi grafik HeatMap
+                    heatmap.set_global_opts(
+                        title_opts=opts.TitleOpts(title="Heatmap"),
+                        visualmap_opts=opts.VisualMapOpts(),
+                    )
+
+                    # Menampilkan grafik HeatMap di layar menggunakan st.pyplot()
+                    st.pyplot(heatmap.render_embed())
+
+                    # Mengunduh grafik
+                    st.markdown("### Download Grafik")
+                    download_chart(heatmap.render(), 'heatmap.html')
+
         elif chart_type == 'Plotly Chart':
             st.subheader('Plotly Chart')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
