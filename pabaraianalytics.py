@@ -142,7 +142,7 @@ def show_main_menu(user):
                     # Mengunduh grafik
                     st.markdown("### Download Grafik")
                     download_chart(fig, 'bar_chart.png')
-
+        data = None
         elif chart_type == 'Histogram':
             st.subheader('Histogram')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
