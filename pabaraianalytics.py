@@ -182,18 +182,17 @@ def show_main_menu(user):
             data = pd.read_csv(uploaded_file, delimiter=';')
             st.dataframe(data)
 
-        # Jika tombol "Tampilkan Grafik" ditekan
-        if st.button('Tampilkan Grafik'):
-            # Membuat heatmap menggunakan Plotly Express
-            fig = px.imshow(data.corr())
+            # Jika tombol "Tampilkan Grafik" ditekan
+            if st.button('Tampilkan Grafik'):
+                # Membuat heatmap menggunakan Plotly Express
+                fig = px.imshow(data.corr())
 
-            # Menampilkan heatmap di layar menggunakan st.plotly_chart()
-            st.plotly_chart(fig)
+                # Menampilkan heatmap di layar menggunakan st.plotly_chart()
+                st.plotly_chart(fig)
 
-            # Mengunduh grafik
-            st.markdown("### Download Grafik")
-            download_chart(fig, 'heatmap.png')
-                 
+                # Mengunduh grafik
+                st.markdown("### Download Grafik")
+                download_chart(fig, 'heatmap.png')      
 
         elif chart_type == 'Plotly Chart':
             st.subheader('Plotly Chart')
