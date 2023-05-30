@@ -175,11 +175,18 @@ def show_main_menu(user):
                     plt.savefig(img_buffer, format='png')
                     img_buffer.seek(0)
         
-        elif chart_type == 'Heatmap':
+       elif chart_type == 'Heatmap':
             st.subheader('Heatmap')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
             if uploaded_file is not None:
                 data = pd.read_csv(uploaded_file, delimiter=';')
+
+                # Mengganti tanda titik dengan tanda kosong dalam kolom yang mengandung angka
+                data['column_name'] = data['column_name'].str.replace('.', '')
+
+                # Mengubah tipe kolom menjadi float
+                data['column_name'] = data['column_name'].astype(float)
+
                 st.dataframe(data)
 
                 # Jika tombol "Tampilkan Grafik" ditekan
@@ -192,7 +199,8 @@ def show_main_menu(user):
 
                     # Mengunduh grafik
                     st.markdown("### Download Grafik")
-                    download_chart(fig, 'heatmap.png')      
+                    download_chart(fig, 'heatmap.png')
+
 
         elif chart_type == 'Plotly Chart':
             st.subheader('Plotly Chart')
