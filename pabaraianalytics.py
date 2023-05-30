@@ -191,21 +191,21 @@ def show_main_menu(user):
              filter_column = st.selectbox('Pilih Kolom untuk Filter (Opsional)', data.columns)
 
             # Menerapkan filter jika kolom filter dipilih
-            if filter_column:
-                filter_value = st.text_input('Masukkan Nilai Filter')
-                filtered_data = data[data[filter_column] == filter_value]
-            else:
-                filtered_data = data
+                if filter_column:
+                    filter_value = st.text_input('Masukkan Nilai Filter')
+                    filtered_data = data[data[filter_column] == filter_value]
+                else:
+                    filtered_data = data
 
-            # Membuat matriks data heatmap
-            heatmap_data = filtered_data.pivot_table(values=value_column, index=y_column, columns=x_column)
+                # Membuat matriks data heatmap
+                heatmap_data = filtered_data.pivot_table(values=value_column, index=y_column, columns=x_column)
 
-            # Menampilkan heatmap menggunakan seaborn
-            fig, ax = plt.subplots(figsize=(10, 8))
-            sns.heatmap(heatmap_data, annot=True, cmap='YlGnBu', fmt='.1f', linewidths=0.5, ax=ax)
+                # Menampilkan heatmap menggunakan seaborn
+                fig, ax = plt.subplots(figsize=(10, 8))
+                sns.heatmap(heatmap_data, annot=True, cmap='YlGnBu', fmt='.1f', linewidths=0.5, ax=ax)
 
-            # Menampilkan heatmap di Streamlit
-            st.pyplot(fig)
+                # Menampilkan heatmap di Streamlit
+                st.pyplot(fig)
 
              # Mengunduh grafik
              st.markdown("### Download Grafik")
