@@ -12,6 +12,9 @@ from firebase_admin import firestore
 from firebase_admin import auth
 import re
 import base64
+import pyecharts.options as opts
+from pyecharts.charts import HeatMap
+from pyecharts.faker import Faker
 
 # Menampilkan copy right di sidebar
 st.sidebar.markdown("---")
