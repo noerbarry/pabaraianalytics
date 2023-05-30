@@ -176,7 +176,7 @@ def show_main_menu(user):
                     img_buffer.seek(0)
         
         elif chart_type == 'Heatmap':
-             st.subheader('Heatmap')
+               st.subheader('Heatmap')
 
                 # Memilih bidang untuk sumbu x
                 x_column = st.selectbox('Pilih Kolom untuk Sumbu X', data.columns)
@@ -207,9 +207,9 @@ def show_main_menu(user):
                 # Menampilkan heatmap di Streamlit
                 st.pyplot(fig)
 
-                    # Mengunduh grafik
-                    st.markdown("### Download Grafik")
-                    download_chart(fig, 'heatmap.png')    
+                                # Mengunduh grafik
+                                st.markdown("### Download Grafik")
+                                download_chart(fig, 'heatmap.png')    
 
 
         elif chart_type == 'Plotly Chart':
