@@ -175,44 +175,6 @@ def show_main_menu(user):
                     plt.savefig(img_buffer, format='png')
                     img_buffer.seek(0)
         
-        # Asumsi 'data' sudah didefinisikan dan diberikan nilai sebelum blok kondisional
-        data = None
-        elif chart_type == 'Heatmap':
-            st.subheader('Heatmap')
-
-            # Memilih bidang untuk sumbu x
-            x_column = st.selectbox('Pilih Kolom untuk Sumbu X', data.columns)
-
-            # Memilih bidang untuk sumbu y
-            y_column = st.selectbox('Pilih Kolom untuk Sumbu Y', data.columns)
-
-            # Memilih bidang untuk nilai
-            value_column = st.selectbox('Pilih Kolom untuk Nilai', data.columns)
-
-            # Filter opsional
-            filter_column = st.selectbox('Pilih Kolom untuk Filter (Opsional)', data.columns)
-
-            # Menerapkan filter jika kolom filter dipilih
-            if filter_column:
-                filter_value = st.text_input('Masukkan Nilai Filter')
-                filtered_data = data[data[filter_column] == filter_value]
-            else:
-                filtered_data = data
-
-            # Membuat matriks data heatmap
-            heatmap_data = filtered_data.pivot_table(values=value_column, index=y_column, columns=x_column)
-
-            # Menampilkan heatmap menggunakan seaborn
-            fig, ax = plt.subplots(figsize=(10, 8))
-            sns.heatmap(heatmap_data, annot=True, cmap='YlGnBu', fmt='.1f', linewidths=0.5, ax=ax)
-
-            # Menampilkan heatmap di Streamlit
-            st.pyplot(fig)
-
-            # Mengunduh grafik
-            st.markdown("### Download Grafik")
-            download_chart(fig, 'heatmap.png')
-
         elif chart_type == 'Plotly Chart':
             st.subheader('Plotly Chart')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
