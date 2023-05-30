@@ -141,7 +141,7 @@ def show_main_menu(user):
 
                     # Mengunduh grafik
                     st.markdown("### Download Grafik")
-                    download_chart(fig, 'bar_chart.png')
+                    download_chart(fig, 'bar_chart.png') 
         data = None
         elif chart_type == 'Histogram':
             st.subheader('Histogram')
