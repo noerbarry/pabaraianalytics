@@ -175,27 +175,37 @@ def show_main_menu(user):
                     plt.savefig(img_buffer, format='png')
                     img_buffer.seek(0)
         
-    elif chart_type == 'Heatmap':
-        st.subheader('Heatmap')
-        uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
-        if uploaded_file is not None:
-            data = pd.read_csv(uploaded_file, delimiter=';')
+        elif chart_type == 'Heatmap':
+         st.subheader('Heatmap')
 
-            # Mengganti tanda titik dengan tanda kosong dalam kolom yang mengandung angka
-            data['column_name'] = data['column_name'].str.replace('.', '')
+            # Memilih bidang untuk sumbu x
+            x_column = st.selectbox('Pilih Kolom untuk Sumbu X', data.columns)
 
-            # Mengubah tipe kolom menjadi float
-            data['column_name'] = data['column_name'].astype(float)
+            # Memilih bidang untuk sumbu y
+            y_column = st.selectbox('Pilih Kolom untuk Sumbu Y', data.columns)
 
-            st.dataframe(data)
+            # Memilih bidang untuk nilai
+            value_column = st.selectbox('Pilih Kolom untuk Nilai', data.columns)
 
-            # Jika tombol "Tampilkan Grafik" ditekan
-            if st.button('Tampilkan Grafik'):
-                # Membuat heatmap menggunakan Plotly Express
-                fig = px.imshow(data.corr())
+            # Filter opsional
+            filter_column = st.selectbox('Pilih Kolom untuk Filter (Opsional)', data.columns)
 
-                # Menampilkan heatmap di layar menggunakan st.plotly_chart()
-                st.plotly_chart(fig)
+            # Menerapkan filter jika kolom filter dipilih
+            if filter_column:
+                filter_value = st.text_input('Masukkan Nilai Filter')
+                filtered_data = data[data[filter_column] == filter_value]
+            else:
+                filtered_data = data
+
+            # Membuat matriks data heatmap
+            heatmap_data = filtered_data.pivot_table(values=value_column, index=y_column, columns=x_column)
+
+            # Menampilkan heatmap menggunakan seaborn
+            fig, ax = plt.subplots(figsize=(10, 8))
+            sns.heatmap(heatmap_data, annot=True, cmap='YlGnBu', fmt='.1f', linewidths=0.5, ax=ax)
+
+            # Menampilkan heatmap di Streamlit
+            st.pyplot(fig)
 
                 # Mengunduh grafik
                 st.markdown("### Download Grafik")
