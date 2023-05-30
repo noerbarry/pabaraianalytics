@@ -177,49 +177,51 @@ def show_main_menu(user):
                     img_buffer = io.BytesIO()
                     plt.savefig(img_buffer, format='png')
                     img_buffer.seek(0)
-        elif chart_type == 'Heatmap':
+       elif chart_type == 'Heatmap':
             st.subheader('Heatmap')
 
-            uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
-            if uploaded_file is not None:
-                data = pd.read_csv(uploaded_file, delimiter=';')
-                st.dataframe(data)
+            # Memilih bidang untuk sumbu x
+            x_column = st.selectbox('Pilih Kolom untuk Sumbu X', data.columns)
 
-                x_column = st.selectbox('Pilih Kolom untuk Sumbu X', data.columns)
-                y_column = st.selectbox('Pilih Kolom untuk Sumbu Y', data.columns)
-                value_column = st.selectbox('Pilih Kolom untuk Nilai', data.columns)
+            # Memilih bidang untuk sumbu y
+            y_column = st.selectbox('Pilih Kolom untuk Sumbu Y', data.columns)
 
-                # Filter opsional
-                filter_column = st.selectbox('Pilih Kolom untuk Filter (Opsional)', data.columns)
+            # Memilih bidang untuk nilai
+            value_column = st.selectbox('Pilih Kolom untuk Nilai', data.columns)
 
-                if filter_column:
-                    filter_value = st.text_input('Masukkan Nilai Filter')
-                    filtered_data = data[data[filter_column] == filter_value]
-                else:
-                    filtered_data = data
+            # Filter opsional
+            filter_column = st.selectbox('Pilih Kolom untuk Filter (Opsional)', data.columns)
 
-                heatmap_data = filtered_data[[x_column, y_column, value_column]].values.tolist()
+            # Menerapkan filter jika kolom filter dipilih
+            if filter_column:
+                filter_value = st.text_input('Masukkan Nilai Filter')
+                filtered_data = data[data[filter_column] == filter_value]
+            else:
+                filtered_data = data
 
-                (
-                    HeatMap()
-                    .add_xaxis(Faker.choose())
-                    .add_yaxis("Series 1", Faker.values())
-                    .set_global_opts(
-                        title_opts=opts.TitleOpts(title="Heatmap"),
-                        visualmap_opts=opts.VisualMapOpts(),
-                    )
-                    .render("heatmap.html")
-                )
+            # Membuat matriks data heatmap
+            heatmap_data = filtered_data.pivot_table(values=value_column, index=y_column, columns=x_column)
 
-                # Menampilkan heatmap menggunakan ECharts
-                st.components.v1.html(open("heatmap.html", 'r').read(), height=600)
+            # Mengubah data pivot menjadi daftar yang sesuai dengan format echart
+            heatmap_values = []
+            for y_val, row in heatmap_data.iterrows():
+                for x_val, value in row.iteritems():
+                    heatmap_values.append([x_val, y_val, value])
 
-                # Mengunduh grafik
-                st.markdown("### Download Grafik")
-                st.markdown(
-                    f'<a href="heatmap.html" download="heatmap.html">Unduh Grafik</a>',
-                    unsafe_allow_html=True
-                )
+            # Membuat objek HeatMap menggunakan pyecharts
+            heatmap = HeatMap()
+            heatmap.add_xaxis(heatmap_data.columns.tolist())
+            heatmap.add_yaxis("", heatmap_data.index.tolist(), heatmap_values)
+
+            # Mengatur properti lainnya
+            heatmap.set_global_opts(
+                title_opts=opts.TitleOpts(title="Heatmap"),
+                visualmap_opts=opts.VisualMapOpts(),
+            )
+
+            # Menampilkan HeatMap menggunakan st_pyecharts()
+            st_pyecharts(heatmap)
+
         
         elif chart_type == 'Plotly Chart':
             st.subheader('Plotly Chart')
