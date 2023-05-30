@@ -197,6 +197,23 @@ def show_main_menu(user):
                     # Mengunduh grafik
                     st.markdown("### Download Grafik")
                     download_chart(fig, 'plotly_chart.png')
+                    
+   elif chart_type == 'Heatmap':
+    st.subheader('Heatmap')
+    uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
+    if uploaded_file is not None:
+        data = pd.read_csv(uploaded_file, delimiter=';')
+        st.dataframe(data)
+
+        # Menghitung matriks korelasi
+        correlation = data.corr()
+
+        # Jika tombol "Tampilkan Grafik" ditekan
+        if st.button('Tampilkan Grafik'):
+            # Membuat heatmap menggunakan seaborn
+            sns.heatmap(correlation, annot=True, cmap='coolwarm')
+            st.pyplot()
+                 
 
 # Fungsi untuk tampilan awal
 def show_login_page():
