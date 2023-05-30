@@ -275,6 +275,7 @@ def show_signup_page():
 def main():
     st.title('Visualize Your Data with Ease')
     st.write('Effortless Data Visualization: Seamlessly Generate Line, Bar, Histogram, and Plotly Charts from CSV Uploads')
+    st.write('Noer Barrihadianto')
     st.markdown(
     """
     <style>
