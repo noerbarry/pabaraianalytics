@@ -102,7 +102,6 @@ def show_main_menu(user):
             st.subheader('Grafik Line')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
             if uploaded_file is not None:
-                #data = pd.read_csv(uploaded_file)
                 data = pd.read_csv(uploaded_file, delimiter=';')
 
                 st.dataframe(data)
@@ -126,7 +125,7 @@ def show_main_menu(user):
             st.subheader('Grafik Batang')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
             if uploaded_file is not None:
-                data = pd.read_csv(uploaded_file)
+                data = pd.read_csv(uploaded_file, delimiter=';')
                 st.dataframe(data)
 
                 x_column = st.selectbox('Pilih Kolom X', data.columns)
@@ -148,7 +147,7 @@ def show_main_menu(user):
             st.subheader('Histogram')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
             if uploaded_file is not None:
-                data = pd.read_csv(uploaded_file)
+                data = pd.read_csv(uploaded_file, delimiter=';')
                 st.dataframe(data)
 
                 column = st.selectbox('Pilih Kolom', data.columns)
@@ -181,7 +180,7 @@ def show_main_menu(user):
             st.subheader('Plotly Chart')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
             if uploaded_file is not None:
-                data = pd.read_csv(uploaded_file)
+                data = pd.read_csv(uploaded_file, delimiter=';')
                 st.dataframe(data)
 
                 x_column = st.selectbox('Pilih Kolom X', data.columns)
