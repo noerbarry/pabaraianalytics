@@ -182,63 +182,27 @@ def show_main_menu(user):
                     plt.savefig(img_buffer, format='png')
                     img_buffer.seek(0)
 
-        elif chart_type == 'Heatmap':
-              st.subheader('Heatmap')
-              uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
-              data = pd.read_csv(uploaded_file, delimiter=';')
-              st.dataframe(data)
-              
-              x_column = st.selectbox('Pilih Kolom X', data.columns)
-              y_column = st.selectbox('Pilih Kolom Y', data.columns)
-              value_column = st.selectbox('Pilih Kolom Nilai', data.columns)
+       elif chart_type == 'Elements':
+             st.subheader('Grafik Elements')
+             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
+             if uploaded_file is not None:
+                 data = pd.read_csv(uploaded_file, delimiter=';')
+                 st.dataframe(data)
 
-              # Memeriksa apakah ada nilai non-numerik pada kolom yang dipilih
-              non_numeric_values = data[[x_column, y_column, value_column]].apply(pd.to_numeric, errors='coerce').isnull().sum()
-              if non_numeric_values.sum() > 0:
-                  st.error('Kesalahan: Kolom yang dipilih berisi nilai non-numerik.')
-                  st.error(non_numeric_values[non_numeric_values > 0])
-                  return
+                 label_column = st.selectbox('Pilih Kolom Label', data.columns)
+                 value_column = st.selectbox('Pilih Kolom Nilai', data.columns)
 
-              # Konversi data ke tipe numerik
-              data[x_column] = pd.to_numeric(data[x_column])
-              data[y_column] = pd.to_numeric(data[y_column])
-              data[value_column] = pd.to_numeric(data[value_column])  
-            
+                 # Jika tombol "Tampilkan Grafik" ditekan
+                 if st.button('Tampilkan Grafik'):
+                     # Membuat objek pie chart
+                     fig = go.Figure(data=[go.Pie(labels=data[label_column], values=data[value_column])])
 
-              # Mengatur granularity
-              granularity = 10  # Tentukan jumlah interval/granularity yang diinginkan
+                     # Menampilkan grafik pie chart di layar menggunakan st.plotly_chart()
+                     st.plotly_chart(fig)
 
-              # Membuat array dengan rentang nilai yang lebih kecil
-              x_values = np.linspace(data[x_column].min(), data[x_column].max(), granularity)
-              y_values = np.linspace(data[y_column].min(), data[y_column].max(), granularity)
-
-              # Bulatkan nilai pada heatmap
-              rounded_values = np.round(data[value_column], decimals=2)
-
-              # Membuat objek HeatMap
-              heatmap = HeatMap()
-
-              # Mengatur data HeatMap dengan nilai yang sudah dibulatkan
-              heatmap.add_xaxis(x_values.tolist())
-              heatmap.add_yaxis("", y_values.tolist(), rounded_values.tolist(), label_opts=opts.LabelOpts(is_show=True))
-
-              # Mengatur opsi grafik HeatMap
-              heatmap.set_global_opts(
-                  title_opts=opts.TitleOpts(title="Heatmap"),
-                  visualmap_opts=opts.VisualMapOpts(),
-              )
-
-              # Menggambar grafik HeatMap
-              img = heatmap.render_notebook()
-              st.plotly_chart(img)
-
-              # Mengunduh grafik HeatMap
-              img_buffer = io.BytesIO()
-              fig = heatmap.render()
-              fig.savefig(img_buffer, format='png')
-              img_buffer.seek(0)
-              download_chart(img_buffer.getvalue(), 'heatmap.png')
-
+                     # Mengunduh grafik
+                     st.markdown("### Download Grafik")
+                     download_chart(fig, 'elements_chart.png')
 
         elif chart_type == 'Plotly Chart':
             st.subheader('Plotly Chart')
