@@ -181,24 +181,9 @@ def show_main_menu(user):
                     img_buffer.seek(0)
 
         elif chart_type == 'Heatmap':
-          st.subheader('Heatmap')
-          uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
-          if uploaded_file is not None:
-             try:
-                 data_comma = pd.read_csv(uploaded_file, delimiter=',')
-                 # Menampilkan data yang dibaca dengan delimiter koma
-                 st.write("Data dengan delimiter koma (','):")
-                 st.dataframe(data_comma)
-                 except pd.errors.ParserError:
-                 st.warning("Tidak dapat membaca file dengan delimiter koma (',')")
-
-             try:
-                 data_semicolon = pd.read_csv(uploaded_file, delimiter=';')
-                 # Menampilkan data yang dibaca dengan delimiter titik koma
-                 st.write("Data dengan delimiter titik koma (';'):")
-                 st.dataframe(data_semicolon)
-               except pd.errors.ParserError:
-               st.warning("Tidak dapat membaca file dengan delimiter titik koma (';')") 
+              st.subheader('Heatmap')
+              uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
+              data = pd.read_csv(uploaded_file, delimiter=',')
               st.dataframe(data)
               
               x_column = st.selectbox('Pilih Kolom X', data.columns)
