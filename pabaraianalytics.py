@@ -200,8 +200,6 @@ def show_main_menu(user):
             except pd.errors.ParserError:
                 st.warning("Tidak dapat membaca file dengan delimiter titik koma (';')")            
  
-              # Mengonversi kolom "data_content" menjadi tipe data int64
-              data['data_content'] = data['data_content'].apply(convert_to_int)
               st.dataframe(data)
               
               x_column = st.selectbox('Pilih Kolom X', data.columns)
