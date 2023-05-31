@@ -184,9 +184,7 @@ def show_main_menu(user):
           st.subheader('Heatmap')
           uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
           if uploaded_file is not None:
-              dtype = {'nama_variabel': str, 'nama_variabel_turunan': str, 'data_content': int}
-              data = pd.read_csv(uploaded_file, delimiter=';', dtype=dtype)
-               # Mengubah nilai non-numerik ("-") menjadi NaN
+              data = pd.read_csv(uploaded_file, delimiter=';')
               data['data_content'] = pd.to_numeric(data['data_content'], errors='coerce')
               st.dataframe(data)
               
