@@ -181,41 +181,54 @@ def show_main_menu(user):
                     img_buffer.seek(0)
 
         elif chart_type == 'Heatmap':
-            st.subheader('Heatmap')
-            uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
-            if uploaded_file is not None:
-                data = pd.read_csv(uploaded_file, delimiter=';')
-                st.dataframe(data)
+          st.subheader('Heatmap')
+          uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
+          if uploaded_file is not None:
+              data = pd.read_csv(uploaded_file, delimiter=';')
+              st.dataframe(data)
 
-                x_column = st.selectbox('Pilih Kolom X', data.columns)
-                y_column = st.selectbox('Pilih Kolom Y', data.columns)
-                value_column = st.selectbox('Pilih Kolom Nilai', data.columns)
+              x_column = st.selectbox('Pilih Kolom X', data.columns)
+              y_column = st.selectbox('Pilih Kolom Y', data.columns)
+              value_column = st.selectbox('Pilih Kolom Nilai', data.columns)
 
-                # Jika tombol "Tampilkan Grafik" ditekan
-                if st.button('Tampilkan Grafik'):
-                    # Membuat objek HeatMap
-                    heatmap = HeatMap()
+              # Konversi data ke tipe numerik
+              data[x_column] = pd.to_numeric(data[x_column])
+              data[y_column] = pd.to_numeric(data[y_column])
+              data[value_column] = pd.to_numeric(data[value_column])
 
-                    # Mengatur data HeatMap
-                    heatmap.add_xaxis(data[x_column].tolist())
-                    heatmap.add_yaxis("", data[y_column].tolist(), data[value_column].tolist(), label_opts=opts.LabelOpts(is_show=True))
+              # Mengatur granularity
+              granularity = 10  # Tentukan jumlah interval/granularity yang diinginkan
 
-                    # Mengatur opsi grafik HeatMap
-                    heatmap.set_global_opts(
-                        title_opts=opts.TitleOpts(title="Heatmap"),
-                        visualmap_opts=opts.VisualMapOpts(),
-                    )
+              # Membuat array dengan rentang nilai yang lebih kecil
+              x_values = np.linspace(data[x_column].min(), data[x_column].max(), granularity)
+              y_values = np.linspace(data[y_column].min(), data[y_column].max(), granularity)
 
-                    # Menggambar grafik HeatMap
-                    img = heatmap.render_notebook()
-                    st.plotly_chart(img)
+              # Bulatkan nilai pada heatmap
+              rounded_values = np.round(data[value_column], decimals=2)
 
-                    # Mengunduh grafik HeatMap
-                    img_buffer = io.BytesIO()
-                    fig = heatmap.render()
-                    fig.savefig(img_buffer, format='png')
-                    img_buffer.seek(0)
-                    download_chart(img_buffer.getvalue(), 'heatmap.png')
+              # Membuat objek HeatMap
+              heatmap = HeatMap()
+
+              # Mengatur data HeatMap dengan nilai yang sudah dibulatkan
+              heatmap.add_xaxis(x_values.tolist())
+              heatmap.add_yaxis("", y_values.tolist(), rounded_values.tolist(), label_opts=opts.LabelOpts(is_show=True))
+
+              # Mengatur opsi grafik HeatMap
+              heatmap.set_global_opts(
+                  title_opts=opts.TitleOpts(title="Heatmap"),
+                  visualmap_opts=opts.VisualMapOpts(),
+              )
+
+              # Menggambar grafik HeatMap
+              img = heatmap.render_notebook()
+              st.plotly_chart(img)
+
+              # Mengunduh grafik HeatMap
+              img_buffer = io.BytesIO()
+              fig = heatmap.render()
+              fig.savefig(img_buffer, format='png')
+              img_buffer.seek(0)
+              download_chart(img_buffer.getvalue(), 'heatmap.png')
 
 
         elif chart_type == 'Plotly Chart':
