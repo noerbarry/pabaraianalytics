@@ -185,7 +185,15 @@ def show_main_menu(user):
           uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
           if uploaded_file is not None:
               data = pd.read_csv(uploaded_file, delimiter=';')
-              data['data_content'] = pd.to_numeric(data['data_content'], errors='coerce')
+              # Fungsi untuk mengonversi nilai numerik menjadi int64 dan mengabaikan nilai non-numerik
+              def convert_to_int(value):
+                  try:
+                      return int(value)
+                  except ValueError:
+                     return None
+
+              # Mengonversi kolom "data_content" menjadi tipe data int64
+              data['data_content'] = data['data_content'].apply(convert_to_int)
               st.dataframe(data)
               
               x_column = st.selectbox('Pilih Kolom X', data.columns)
