@@ -183,7 +183,7 @@ def show_main_menu(user):
         elif chart_type == 'Heatmap':
           st.subheader('Heatmap')
           uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
-                if uploaded_file is not None:
+          if uploaded_file is not None:
           try:
               data_comma = pd.read_csv(uploaded_file, delimiter=',')
               # Menampilkan data yang dibaca dengan delimiter koma
