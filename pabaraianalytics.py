@@ -113,18 +113,12 @@ def show_main_menu(user):
 
                 x_column = st.selectbox('Pilih Kolom X', data.columns)
                 y_column = st.selectbox('Pilih Kolom Y', data.columns)
-                # Filter options
-                filter_column = st.selectbox('Filter Kolom', data.columns)
-                filter_value = st.text_input('Filter Nilai')
-
-                filtered_data = data[data[filter_column] == filter_value] if filter_column else data
-
+               
                 # Jika tombol "Tampilkan Grafik" ditekan
                 if st.button('Tampilkan Grafik'):
                     # Membuat grafik line menggunakan Plotly Express
-                    #fig = px.line(data, x=x_column, y=y_column)
-                    fig = px.line(filtered_data, x=x_column, y=y_column)
- 
+                    fig = px.line(data, x=x_column, y=y_column)
+
                     # Menampilkan grafik line di layar menggunakan st.plotly_chart()
                     st.plotly_chart(fig)
 
