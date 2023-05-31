@@ -184,7 +184,8 @@ def show_main_menu(user):
           st.subheader('Heatmap')
           uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
           if uploaded_file is not None:
-              data = pd.read_csv(uploaded_file, delimiter=';')
+              #data = pd.read_csv(uploaded_file, delimiter=';')
+              data = pd.read_csv(uploaded_file, delimiter=';', dtype={'nama_variabel': str, 'nama_variabel_turunan': str})  
               st.dataframe(data)
 
               x_column = st.selectbox('Pilih Kolom X', data.columns)
