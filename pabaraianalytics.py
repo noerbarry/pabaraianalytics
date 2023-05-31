@@ -19,7 +19,7 @@ from pyecharts.faker import Faker
 # Menampilkan copy right di sidebar
 st.sidebar.markdown("---")
 st.sidebar.write("© Pabarai Analytics")
-st.page_title="pabaraianalytics"
+st.page_title="pabarai analytics"
    
 # Inisialisasi aplikasi Firebase
 cred = credentials.Certificate('pabaranalytics-firebase-adminsdk-th0qb-1efdb39cf3.json')  # Ganti dengan path ke serviceAccountKey.json Anda
