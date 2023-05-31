@@ -199,14 +199,7 @@ def show_main_menu(user):
                 st.dataframe(data_semicolon)
             except pd.errors.ParserError:
                 st.warning("Tidak dapat membaca file dengan delimiter titik koma (';')")            
-   
-              # Fungsi untuk mengonversi nilai numerik menjadi int64 dan mengabaikan nilai non-numerik
-              def convert_to_int(value):
-                  try:
-                      return int(value)
-                  except ValueError:
-                     return None
-
+ 
               # Mengonversi kolom "data_content" menjadi tipe data int64
               data['data_content'] = data['data_content'].apply(convert_to_int)
               st.dataframe(data)
