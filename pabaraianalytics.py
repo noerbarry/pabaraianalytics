@@ -183,7 +183,7 @@ def show_main_menu(user):
         elif chart_type == 'Heatmap':
               st.subheader('Heatmap')
               uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
-              data = pd.read_csv(uploaded_file, delimiter=',')
+              data = pd.read_csv(uploaded_file, delimiter=';')
               st.dataframe(data)
               
               x_column = st.selectbox('Pilih Kolom X', data.columns)
