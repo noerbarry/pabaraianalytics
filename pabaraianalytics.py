@@ -189,7 +189,7 @@ def show_main_menu(user):
                  # Menampilkan data yang dibaca dengan delimiter koma
                  st.write("Data dengan delimiter koma (','):")
                  st.dataframe(data_comma)
-             except pd.errors.ParserError:
+                 except pd.errors.ParserError:
                  st.warning("Tidak dapat membaca file dengan delimiter koma (',')")
 
              try:
@@ -197,8 +197,8 @@ def show_main_menu(user):
                  # Menampilkan data yang dibaca dengan delimiter titik koma
                  st.write("Data dengan delimiter titik koma (';'):")
                  st.dataframe(data_semicolon)
-              except pd.errors.ParserError:
-              st.warning("Tidak dapat membaca file dengan delimiter titik koma (';')") 
+               except pd.errors.ParserError:
+               st.warning("Tidak dapat membaca file dengan delimiter titik koma (';')") 
               st.dataframe(data)
               
               x_column = st.selectbox('Pilih Kolom X', data.columns)
