@@ -13,7 +13,6 @@ from firebase_admin import auth
 import re
 import base64
 import pyecharts.options as opts
-from pyecharts.charts import HeatMap
 from pyecharts.faker import Faker
 import numpy as np
 
