@@ -191,10 +191,18 @@ def show_main_menu(user):
               y_column = st.selectbox('Pilih Kolom Y', data.columns)
               value_column = st.selectbox('Pilih Kolom Nilai', data.columns)
 
+              # Memeriksa apakah ada nilai non-numerik pada kolom yang dipilih
+              non_numeric_values = data[[x_column, y_column, value_column]].apply(pd.to_numeric, errors='coerce').isnull().sum()
+              if non_numeric_values.sum() > 0:
+                  st.error('Kesalahan: Kolom yang dipilih berisi nilai non-numerik.')
+                  st.error(non_numeric_values[non_numeric_values > 0])
+                  return
+
               # Konversi data ke tipe numerik
               data[x_column] = pd.to_numeric(data[x_column])
               data[y_column] = pd.to_numeric(data[y_column])
-              data[value_column] = pd.to_numeric(data[value_column])
+              data[value_column] = pd.to_numeric(data[value_column])  
+            
 
               # Mengatur granularity
               granularity = 10  # Tentukan jumlah interval/granularity yang diinginkan
