@@ -92,8 +92,6 @@ def get_download_link(file_path):
     base64_encoded = base64.b64encode(contents).decode('utf-8')
     href = f'<a href="data:file/png;base64,{base64_encoded}" download="wordcloud.png">Klik di sini untuk mengunduh gambar word cloud</a>'
     return href
-
-chart_type = st.selectbox('Pilih Jenis Grafik', ['Word Cloud', 'Elements'])
       
 # Fungsi untuk mengunduh grafik
 def download_chart(chart, filename):
