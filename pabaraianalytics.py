@@ -215,6 +215,7 @@ def show_main_menu(user):
                      wordcloud.to_file('wordcloud.png')
                      st.success('Word cloud berhasil disimpan sebagai gambar.')
 
+
         elif chart_type == 'Scatter Plot':
              st.subheader('Scatter Plot')
              uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
