@@ -185,7 +185,7 @@ def show_main_menu(user):
                     plt.savefig(img_buffer, format='png')
                     img_buffer.seek(0)
 
-        elif chart_type == 'Elements': 
+        elif chart_type == 'Elements':
              st.subheader('Grafik Elements')
              uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
              if uploaded_file is not None:
@@ -197,17 +197,12 @@ def show_main_menu(user):
 
                  # Jika tombol "Tampilkan Grafik" ditekan
                  if st.button('Tampilkan Grafik'):
-                     # Membuat objek pie chart
-                     fig = go.Figure(data=[go.Pie(labels=data[label_column], values=data[value_column])])
+                     # Membuat word cloud
+                     wordcloud = WordCloud().generate_from_frequencies(data.set_index(label_column)[value_column].to_dict())
 
-                     # Menampilkan grafik pie chart di layar menggunakan st.plotly_chart()
-                     st.plotly_chart(fig)
-
-                     # Mengunduh grafik
-                     st.markdown("### Download Grafik")
-                     download_chart(fig, 'elements_chart.png')
-
-       
+                     # Menampilkan word cloud di layar menggunakan st.pyplot()
+                     st.pyplot(wordcloud)
+        
         elif chart_type == 'Scatter Plot':
              st.subheader('Scatter Plot')
              uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
