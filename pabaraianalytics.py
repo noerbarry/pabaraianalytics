@@ -21,8 +21,6 @@ from pyecharts.charts import Bar
 from pyecharts.faker import Faker
 from wordcloud import WordCloud
 import altair as alt
-from fbprophet import Prophet
-
 
 
 # Menampilkan copy right di sidebar
