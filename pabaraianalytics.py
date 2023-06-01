@@ -189,6 +189,7 @@ def show_main_menu(user):
         elif chart_type == 'Elements':
              st.subheader('Grafik Elements')
              uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
+
              if uploaded_file is not None:
                  data = pd.read_csv(uploaded_file, delimiter=';')
                  st.dataframe(data)
@@ -199,25 +200,24 @@ def show_main_menu(user):
                  # Jika tombol "Tampilkan Grafik" ditekan
                  if st.button('Tampilkan Grafik'):
                      # Filter out non-numeric values
-                     data = data[pd.to_numeric(data[value_column], errors='coerce').notnull()]
+                     data[value_column] = pd.to_numeric(data[value_column], errors='coerce')
+                     data = data.dropna(subset=[value_column])
 
                      if data.empty:
                          st.warning('Tidak ada kata untuk ditampilkan dalam word cloud.')
                      else:
-                         # Convert remaining values to integers
-                         data[value_column] = data[value_column].astype(int)
+                         # Convert values to dictionary
+                         word_freq = data.set_index(label_column)[value_column].to_dict()
 
                          # Membuat word cloud
-                         wordcloud = WordCloud().generate_from_frequencies(data.set_index(label_column)[value_column].to_dict())
+                         wordcloud = WordCloud().generate_from_frequencies(word_freq)
 
-                         # Menampilkan word cloud di layar menggunakan st.pyplot()
-                         st.pyplot(plt.imshow(wordcloud, interpolation='bilinear'))
-                         plt.axis('off')
+                         # Menampilkan word cloud di layar menggunakan st.image()
+                         st.image(wordcloud.to_image())
 
                          # Simpan word cloud sebagai gambar
                          wordcloud.to_file('wordcloud.png')
                          st.success('Word cloud berhasil disimpan sebagai gambar.')
-
 
         elif chart_type == 'Scatter Plot':
              st.subheader('Scatter Plot')
