@@ -134,7 +134,7 @@ def show_main_menu(user):
             logout()
     elif menu == 'Grafik':
         st.subheader('Pilih Jenis Grafik')
-        chart_type = st.selectbox('Jenis Grafik', ['Line Chart', 'Bar Chart', 'Histogram', 'Word Cloud', 'Scatter Plot', 'Barfi Chart','Plotly Chart'])
+        chart_type = st.selectbox('Jenis Grafik', ['Line Chart', 'Bar Chart', 'Histogram', 'Word Cloud', 'Scatter Plot', 'Barfi Chart','Pivot Table','Plotly Chart'])
         if chart_type == 'Line Chart':
             st.subheader('Grafik Line')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
@@ -322,6 +322,25 @@ def show_main_menu(user):
                      href = f'<a href="data:image/png;base64,{b64_chart}" download="barfi_chart.png">Unduh Grafik</a>'
                      st.write(href, unsafe_allow_html=True)
 
+        elif chart_type == 'Pivot Table':
+             st.subheader('Pivot Table')
+             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
+             if uploaded_file is not None:
+                 data = pd.read_csv(uploaded_file, delimiter=';')
+                 st.dataframe(data)
+
+                 pivot_index = st.selectbox('Pilih Kolom Index', data.columns)
+                 pivot_columns = st.multiselect('Pilih Kolom Kolom', data.columns)
+                 pivot_values = st.selectbox('Pilih Kolom Nilai', data.columns)
+
+                 # Jika tombol "Tampilkan Pivot Table" ditekan
+                 if st.button('Tampilkan Pivot Table'):
+                     # Membuat Pivot Table
+                     pivot_table = pd.pivot_table(data, index=pivot_index, columns=pivot_columns, values=pivot_values)
+
+                     # Menampilkan Pivot Table di layar menggunakan st.dataframe()
+                     st.dataframe(pivot_table)
+
         elif chart_type == 'Plotly Chart':
             st.subheader('Plotly Chart')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
@@ -342,7 +361,8 @@ def show_main_menu(user):
 
                     # Mengunduh grafik
                     st.markdown("### Download Grafik")
-                    download_chart(fig, 'plotly_chart.png')                    
+                    download_chart(fig, 'plotly_chart.png') 
+                    
   
 
 # Fungsi untuk tampilan awal
