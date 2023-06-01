@@ -1,5 +1,5 @@
 plotly==5.14.1
-streamlit==0.87.0
+streamlit>=7.0
 matplotlib==3.5.1
 pandas==1.4.0
 Pillow==8.4.0
