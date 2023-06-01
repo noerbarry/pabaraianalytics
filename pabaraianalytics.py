@@ -115,7 +115,7 @@ def show_main_menu(user):
             logout()
     elif menu == 'Grafik':
         st.subheader('Pilih Jenis Grafik')
-        chart_type = st.selectbox('Jenis Grafik', ['Line Chart', 'Bar Chart', 'Histogram', 'Word Cloud', 'Scatter Plot', 'Barfi Chart', 'Plotly Chart'])
+        chart_type = st.selectbox('Jenis Grafik', ['Line Chart', 'Bar Chart', 'Histogram', 'Word Cloud', 'Vega-Lite Chart' , 'Scatter Plot', 'Barfi Chart', 'Plotly Chart'])
         if chart_type == 'Line Chart':
             st.subheader('Grafik Line')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
@@ -232,7 +232,22 @@ def show_main_menu(user):
                          wordcloud.to_file('wordcloud.png')
                          st.success('Word cloud berhasil disimpan sebagai gambar.')
                          st.markdown(get_download_link('wordcloud.png'), unsafe_allow_html=True) 
-                        
+        
+        elif chart_type == 'Vega-Lite Chart':
+             st.subheader('Vega-Lite Chart')
+             uploaded_file = st.file_uploader('Unggah file JSON', type=['json'])
+             if uploaded_file is not None:
+                 data = uploaded_file.read().decode('utf-8')
+                 chart = alt.Chart.from_json(data)
+
+                 # Menampilkan grafik Vega-Lite di layar menggunakan st.altair_chart()
+                 st.altair_chart(chart, use_container_width=True)
+
+                 # Mengunduh grafik
+                 st.markdown("### Download Grafik")
+                 chart.save('vega-lite_chart.html')
+                 st.markdown('[Unduh Grafik](vega-lite_chart.html)')
+
         elif chart_type == 'Scatter Plot':
              st.subheader('Scatter Plot')
              uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
