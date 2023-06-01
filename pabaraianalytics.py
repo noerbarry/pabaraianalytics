@@ -103,7 +103,7 @@ def show_main_menu(user):
             logout()
     elif menu == 'Grafik':
         st.subheader('Pilih Jenis Grafik')
-        chart_type = st.selectbox('Jenis Grafik', ['Line Chart', 'Bar Chart', 'Histogram', 'Elements', 'Plost', 'Plotly Chart'])
+        chart_type = st.selectbox('Jenis Grafik', ['Line Chart', 'Bar Chart', 'Histogram', 'Elements', 'Scatter Plot', 'Plotly Chart'])
         if chart_type == 'Line Chart':
             st.subheader('Grafik Line')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
@@ -202,6 +202,7 @@ def show_main_menu(user):
                      # Mengunduh grafik
                      st.markdown("### Download Grafik")
                      download_chart(fig, 'elements_chart.png')
+
         elif chart_type == 'Scatter Plot':
              st.subheader('Scatter Plot')
              uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
