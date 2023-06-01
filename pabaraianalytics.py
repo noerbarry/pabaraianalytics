@@ -15,6 +15,8 @@ import base64
 import pyecharts.options as opts
 from pyecharts.faker import Faker
 import numpy as np
+import plotly.io as pio
+
 
 
 # Menampilkan copy right di sidebar
