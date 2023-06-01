@@ -204,7 +204,9 @@ def show_main_menu(user):
                      data = data.dropna(subset=[value_column])
 
                      if data.empty:
-                         st.warning('Tidak ada kata untuk ditampilkan dalam word cloud.')
+                         st.warning('Tidak ada data yang memenuhi persyaratan untuk membuat word cloud.')
+                         st.info('Pastikan file CSV mengandung kolom label dan kolom nilai yang dipilih.')
+                         st.info('Periksa kembali data yang diunggah sebelum menampilkan word cloud.')
                      else:
                          # Convert values to dictionary
                          word_freq = data.set_index(label_column)[value_column].to_dict()
