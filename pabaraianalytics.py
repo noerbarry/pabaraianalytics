@@ -19,10 +19,6 @@ import plotly.io as pio
 from pyecharts import options as opts
 from pyecharts.charts import Bar
 from pyecharts.faker import Faker
-from pyecharts.charts import AGraph
-import networkx as nx
-import matplotlib.pyplot as plt
-from pygraphviz import AGraph
 
 
 # Menampilkan copy right di sidebar
@@ -111,7 +107,7 @@ def show_main_menu(user):
             logout()
     elif menu == 'Grafik':
         st.subheader('Pilih Jenis Grafik')
-        chart_type = st.selectbox('Jenis Grafik', ['Line Chart', 'Bar Chart', 'Histogram', 'Elements', 'Scatter Plot', 'Barfi Chart', 'Agraph', 'Plotly Chart'])
+        chart_type = st.selectbox('Jenis Grafik', ['Line Chart', 'Bar Chart', 'Histogram', 'Elements', 'Scatter Plot', 'Barfi Chart', 'Plotly Chart'])
         if chart_type == 'Line Chart':
             st.subheader('Grafik Line')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
@@ -281,33 +277,6 @@ def show_main_menu(user):
                      b64_chart = base64.b64encode(img_buffer.read()).decode()
                      href = f'<a href="data:image/png;base64,{b64_chart}" download="barfi_chart.png">Unduh Grafik</a>'
                      st.write(href, unsafe_allow_html=True)
-
-        elif chart_type == 'Agraph':
-             st.subheader('Agraph')
-             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
-             if uploaded_file is not None:
-                 data = pd.read_csv(uploaded_file, delimiter=';')
-                 st.dataframe(data)
-
-                 x_column = st.selectbox('Pilih Kolom X', data.columns)
-                 y_column = st.selectbox('Pilih Kolom Y', data.columns)
-
-                 # Jika tombol "Tampilkan Grafik" ditekan
-                 if st.button('Tampilkan Grafik'):
-                     # Membuat grafik Agraph menggunakan Pyecharts
-                     agraph = (
-                         AGraph()
-                         .add_xaxis(data[x_column].tolist())
-                         .add_yaxis(y_column, data[y_column].tolist())
-                         .set_global_opts(title_opts=opts.TitleOpts(title="Grafik Agraph"))
-                     )
-
-                     # Menampilkan grafik Agraph di layar menggunakan st.pyecharts()
-                     st.pyecharts(agraph)
-
-                     # Mengunduh grafik
-                     st.markdown("### Download Grafik")
-                     download_chart(agraph.render(), 'agraph_chart.html')
 
         elif chart_type == 'Plotly Chart':
             st.subheader('Plotly Chart')
