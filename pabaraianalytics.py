@@ -20,6 +20,7 @@ from pyecharts import options as opts
 from pyecharts.charts import Bar
 from pyecharts.faker import Faker
 from wordcloud import WordCloud
+import altair as alt
 
 
 # Menampilkan copy right di sidebar
