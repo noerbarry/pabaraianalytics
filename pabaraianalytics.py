@@ -231,7 +231,30 @@ def show_main_menu(user):
                          # Simpan word cloud sebagai gambar
                          wordcloud.to_file('wordcloud.png')
                          st.success('Word cloud berhasil disimpan sebagai gambar.')
-                         st.markdown(get_download_link('wordcloud.png'), unsafe_allow_html=True)  
+                         st.markdown(get_download_link('wordcloud.png'), unsafe_allow_html=True) 
+                        
+        elif chart_type == 'Bokeh Events':
+             st.subheader('Grafik Bokeh Events')
+             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
+
+             if uploaded_file is not None:
+                 data = pd.read_csv(uploaded_file, delimiter=';')
+                 st.dataframe(data)
+
+                 x_column = st.selectbox('Pilih Kolom X', data.columns)
+                 y_column = st.selectbox('Pilih Kolom Y', data.columns)
+
+                 if st.button('Tampilkan Grafik'):
+                     data[x_column] = pd.to_datetime(data[x_column])
+                     data[y_column] = pd.to_numeric(data[y_column], errors='coerce')
+                     data = data.dropna(subset=[x_column, y_column])
+
+                     if data.empty:
+                         st.warning('Tidak ada data untuk ditampilkan dalam grafik.')
+                     else:
+                         p = figure(title='Grafik Bokeh Events', x_axis_label=x_column, y_axis_label=y_column)
+                         p.line(data[x_column], data[y_column])
+                         st.bokeh_chart(p)
 
         elif chart_type == 'Scatter Plot':
              st.subheader('Scatter Plot')
