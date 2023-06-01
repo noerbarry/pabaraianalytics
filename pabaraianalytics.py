@@ -205,35 +205,36 @@ def show_main_menu(user):
                      st.markdown("### Download Grafik")
                      download_chart(fig, 'elements_chart.png')
 
-       elif chart_type == 'Scatter Plot':
-          st.subheader('Scatter Plot')
-          uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
-          if uploaded_file is not None:
-              data = pd.read_csv(uploaded_file, delimiter=';')
-              st.dataframe(data)
+       
+        elif chart_type == 'Scatter Plot':
+             st.subheader('Scatter Plot')
+             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
+             if uploaded_file is not None:
+                 data = pd.read_csv(uploaded_file, delimiter=';')
+                 st.dataframe(data)
 
-              x_column = st.selectbox('Pilih Kolom X', data.columns)
-              y_column = st.selectbox('Pilih Kolom Y', data.columns)
+                 x_column = st.selectbox('Pilih Kolom X', data.columns)
+                 y_column = st.selectbox('Pilih Kolom Y', data.columns)
 
-              # Jika tombol "Tampilkan Grafik" ditekan
-              if st.button('Tampilkan Grafik'):
-                  # Membuat scatter plot
-                  fig, ax = plt.subplots()
-                  ax.scatter(data[x_column], data[y_column])
+                 # Jika tombol "Tampilkan Grafik" ditekan
+                 if st.button('Tampilkan Grafik'):
+                     # Membuat scatter plot
+                     fig, ax = plt.subplots()
+                     ax.scatter(data[x_column], data[y_column])
 
-                  # Set label dan judul pada Axes
-                  ax.set_xlabel(x_column)
-                  ax.set_ylabel(y_column)
-                  ax.set_title('Scatter Plot')
+                     # Set label dan judul pada Axes
+                     ax.set_xlabel(x_column)
+                     ax.set_ylabel(y_column)
+                     ax.set_title('Scatter Plot')
 
-                  # Menampilkan scatter plot di layar menggunakan st.pyplot()
-                  st.pyplot(fig)
+                     # Menampilkan scatter plot di layar menggunakan st.pyplot()
+                     st.pyplot(fig)
 
-                  # Mengunduh grafik
-                  st.markdown("### Download Grafik")
-                  fig.savefig('scatter_plot.png')
-                  st.markdown('[Unduh Grafik](scatter_plot.png)')
-                
+                     # Mengunduh grafik
+                     st.markdown("### Download Grafik")
+                     fig.savefig('scatter_plot.png')
+                     st.markdown('[Unduh Grafik](scatter_plot.png)')
+                 
         elif chart_type == 'Plotly Chart':
             st.subheader('Plotly Chart')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
