@@ -20,7 +20,8 @@ from pyecharts import options as opts
 from pyecharts.charts import Bar
 from pyecharts.faker import Faker
 from pyecharts.charts import AGraph
-
+import networkx as nx
+import matplotlib.pyplot as plt
 
 
 # Menampilkan copy right di sidebar
