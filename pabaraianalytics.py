@@ -186,7 +186,7 @@ def show_main_menu(user):
                     plt.savefig(img_buffer, format='png')
                     img_buffer.seek(0)
 
-       elif chart_type == 'Elements':
+        elif chart_type == 'Elements':
              st.subheader('Grafik Elements')
              uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
              if uploaded_file is not None:
