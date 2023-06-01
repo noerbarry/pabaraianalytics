@@ -208,7 +208,13 @@ def show_main_menu(user):
                      wordcloud = WordCloud().generate_from_frequencies(data.set_index(label_column)[value_column].to_dict())
 
                      # Menampilkan word cloud di layar menggunakan st.pyplot()
-                     st.pyplot(wordcloud)
+                     st.pyplot(plt.imshow(wordcloud, interpolation='bilinear'))
+                     plt.axis('off')
+
+                     # Simpan word cloud sebagai gambar
+                     wordcloud.to_file('wordcloud.png')
+                     st.success('Word cloud berhasil disimpan sebagai gambar.')
+
         elif chart_type == 'Scatter Plot':
              st.subheader('Scatter Plot')
              uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
