@@ -325,23 +325,22 @@ def show_main_menu(user):
         
         elif chart_type == 'Pivot Table':
              st.subheader('Pivot Table')
-             uploaded_file = st.file_uploader('Upload CSV file', type=['csv'])
+             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
              if uploaded_file is not None:
-                 data = pd.read_csv(uploaded_file)
+                 data = pd.read_csv(uploaded_file, delimiter=';')
                  st.dataframe(data)
 
-                 pivot_index = st.selectbox('Select Index Column', data.columns)
-                 pivot_columns = st.multiselect('Select Columns', data.columns)
-                 pivot_values = st.selectbox('Select Values Column', data.columns)
+                 pivot_index = st.selectbox('Pilih Kolom Index', data.columns)
+                 pivot_columns = st.multiselect('Pilih Kolom Kolom', data.columns)
+                 pivot_values = st.selectbox('Pilih Kolom Nilai', data.columns)
 
-                 # If the "Show Pivot Table" button is clicked
-                 if st.button('Show Pivot Table'):
-                     # Create the Pivot Table
+                 # Jika tombol "Tampilkan Pivot Table" ditekan
+                 if st.button('Tampilkan Pivot Table'):
+                     # Membuat Pivot Table
                      pivot_table = pd.pivot_table(data, index=pivot_index, columns=pivot_columns, values=pivot_values)
 
-                     # Display the Pivot Table
-                     pivot_table_df = pd.DataFrame(pivot_table)
-                     st.dataframe(pivot_table_df.style.set_table_styles([{'selector': 'th', 'props': [('min-width', '100px')]}]))
+                     # Menampilkan Pivot Table di layar menggunakan st.dataframe()
+                     st.dataframe(pivot_table)
 
         elif chart_type == 'Plotly Chart':
             st.subheader('Plotly Chart')
