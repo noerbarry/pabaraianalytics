@@ -22,18 +22,7 @@ from pyecharts.faker import Faker
 from wordcloud import WordCloud
 import altair as alt
 
-# Mengatur tema aplikasi Streamlit
-def set_theme(theme):
-    if theme == 'Light':
-        st.set_option('theme', 'light')
-    elif theme == 'Dark':
-        st.set_option('theme', 'dark')
 
-# Memilih tema
-theme = st.sidebar.selectbox('Pilih tema', ['Light', 'Dark'])
-
-# Mengatur tema berdasarkan pilihan pengguna
-set_theme(theme)
 
 # Menampilkan copy right di sidebar
 st.sidebar.markdown("---")
