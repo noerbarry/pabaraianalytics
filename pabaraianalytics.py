@@ -198,7 +198,10 @@ def show_main_menu(user):
 
                  # Jika tombol "Tampilkan Grafik" ditekan
                  if st.button('Tampilkan Grafik'):
-                     # Convert float values to integers
+                     # Filter out non-numeric values
+                     data = data[pd.to_numeric(data[value_column], errors='coerce').notnull()]
+
+                     # Convert remaining values to integers
                      data[value_column] = data[value_column].astype(int)
 
                      # Membuat word cloud
@@ -206,7 +209,6 @@ def show_main_menu(user):
 
                      # Menampilkan word cloud di layar menggunakan st.pyplot()
                      st.pyplot(wordcloud)
-
         elif chart_type == 'Scatter Plot':
              st.subheader('Scatter Plot')
              uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
