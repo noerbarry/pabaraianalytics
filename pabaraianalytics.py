@@ -227,11 +227,10 @@ def show_main_menu(user):
                      # Menampilkan grafik scatter plot di layar menggunakan st.pyplot()
                      st.pyplot(fig)
 
-                     # Mengunduh grafik
                      st.markdown("### Download Grafik")
-                     fig.write_image("scatter_plot.png")
-                     download_chart(fig, 'scatter_plot.png') 
-
+                     pio.write_image(fig, "scatter_plot.png")
+                     st.markdown('[Unduh Grafik](scatter_plot.png)')
+                
         elif chart_type == 'Plotly Chart':
             st.subheader('Plotly Chart')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
