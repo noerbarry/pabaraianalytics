@@ -111,7 +111,7 @@ def show_main_menu(user):
             logout()
     elif menu == 'Grafik':
         st.subheader('Pilih Jenis Grafik')
-        chart_type = st.selectbox('Jenis Grafik', ['Line Chart', 'Bar Chart', 'Histogram', 'Elements', 'Scatter Plot', 'Barfi Chart', 'Grafik Agraph', 'Plotly Chart'])
+        chart_type = st.selectbox('Jenis Grafik', ['Line Chart', 'Bar Chart', 'Histogram', 'Elements', 'Scatter Plot', 'Barfi Chart', 'Agraph', 'Plotly Chart'])
         if chart_type == 'Line Chart':
             st.subheader('Grafik Line')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
@@ -282,8 +282,8 @@ def show_main_menu(user):
                      href = f'<a href="data:image/png;base64,{b64_chart}" download="barfi_chart.png">Unduh Grafik</a>'
                      st.write(href, unsafe_allow_html=True)
 
-        elif chart_type == 'Grafik Agraph':
-             st.subheader('Grafik Agraph')
+        elif chart_type == 'Agraph':
+             st.subheader('Agraph')
              uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
              if uploaded_file is not None:
                  data = pd.read_csv(uploaded_file, delimiter=';')
