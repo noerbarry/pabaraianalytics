@@ -202,6 +202,31 @@ def show_main_menu(user):
                      # Mengunduh grafik
                      st.markdown("### Download Grafik")
                      download_chart(fig, 'elements_chart.png')
+        elif chart_type == 'Scatter Plot':
+             st.subheader('Scatter Plot')
+             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
+             if uploaded_file is not None:
+                 data = pd.read_csv(uploaded_file, delimiter=';')
+                 st.dataframe(data)
+
+                 x_column = st.selectbox('Pilih Kolom X', data.columns)
+                 y_column = st.selectbox('Pilih Kolom Y', data.columns)
+
+                 # Jika tombol "Tampilkan Grafik" ditekan
+                 if st.button('Tampilkan Grafik'):
+                     # Membuat grafik scatter plot menggunakan matplotlib
+                     fig, ax = plt.subplots(figsize=(8, 6))
+                     ax.scatter(data[x_column], data[y_column])
+                     ax.set_xlabel(x_column)
+                     ax.set_ylabel(y_column)
+                     ax.set_title('Scatter Plot')
+
+                     # Menampilkan grafik scatter plot di layar menggunakan st.pyplot()
+                     st.pyplot(fig)
+
+                     # Mengunduh grafik
+                     st.markdown("### Download Grafik")
+                     download_chart(fig, 'scatter_plot.png') 
 
         elif chart_type == 'Plotly Chart':
             st.subheader('Plotly Chart')
