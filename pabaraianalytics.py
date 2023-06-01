@@ -279,6 +279,7 @@ def show_main_menu(user):
                      href = f'<a href="data:image/png;base64,{b64_chart}" download="barfi_chart.png">Unduh Grafik</a>'
                      st.write(href, unsafe_allow_html=True)
 
+       
         elif chart_type == 'Agraph':
              st.subheader('Grafik Agraph')
              uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
@@ -304,9 +305,8 @@ def show_main_menu(user):
 
                      # Mengunduh grafik
                      st.markdown("### Download Grafik")
-                     download_chart(agraph.render(), 'agraph_chart.html') 
+                     download_chart(agraph.render(), 'agraph_chart.html')
 
-                     
         elif chart_type == 'Plotly Chart':
             st.subheader('Plotly Chart')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
