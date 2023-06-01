@@ -220,10 +220,15 @@ def show_main_menu(user):
                          # Simpan word cloud sebagai gambar
                          # wordcloud.to_file('wordcloud.png')
                          # st.success('Word cloud berhasil disimpan sebagai gambar.')
-                         # Mengunduh grafik
-                         st.markdown("### Download Grafik")
-                         fig.savefig('scatter_plot.png')
-                         st.markdown('[Unduh Grafik](Word Cloud.png)')  
+                         
+                         # Simpan word cloud sebagai gambar
+                         wordcloud.to_file('wordcloud.png')
+                         st.success('Word cloud berhasil disimpan sebagai gambar.')
+                         st.download_button(
+                             'Unduh Gambar Word Cloud',
+                             'wordcloud.png',
+                             'Klik di sini untuk mengunduh gambar word cloud'
+                         )
 
         elif chart_type == 'Scatter Plot':
              st.subheader('Scatter Plot')
