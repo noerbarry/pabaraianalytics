@@ -7,4 +7,5 @@ firebase-admin==6.1.0
 kaleido==0.2.1
 pyecharts==1.9.0
 wordcloud==1.8.1
+fbprophet==0.7.1
 
