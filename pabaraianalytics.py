@@ -224,7 +224,7 @@ def show_main_menu(user):
                          # Simpan word cloud sebagai gambar
                          wordcloud.to_file('wordcloud.png')
                          st.success('Word cloud berhasil disimpan sebagai gambar.')
-                         st.markdown(get_download_link('wordcloud.png'), unsafe_allow_html=True)
+                         st.markdown(download_chart('wordcloud.png'), unsafe_allow_html=True)
 
         elif chart_type == 'Scatter Plot':
              st.subheader('Scatter Plot')
