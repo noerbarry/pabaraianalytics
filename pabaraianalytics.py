@@ -19,6 +19,7 @@ import plotly.io as pio
 from pyecharts import options as opts
 from pyecharts.charts import Bar
 from pyecharts.faker import Faker
+from wordcloud import WordCloud
 
 
 # Menampilkan copy right di sidebar
@@ -197,6 +198,7 @@ def show_main_menu(user):
 
                  # Jika tombol "Tampilkan Grafik" ditekan
                  if st.button('Tampilkan Grafik'):
+                     
                      # Membuat word cloud
                      wordcloud = WordCloud().generate_from_frequencies(data.set_index(label_column)[value_column].to_dict())
 
