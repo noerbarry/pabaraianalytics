@@ -279,7 +279,7 @@ def show_main_menu(user):
                      href = f'<a href="data:image/png;base64,{b64_chart}" download="barfi_chart.png">Unduh Grafik</a>'
                      st.write(href, unsafe_allow_html=True)
 
-        elif chart_type == 'Agraph':
+        elif chart_type == 'Grafik Agraph':
              st.subheader('Grafik Agraph')
              uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
              if uploaded_file is not None:
