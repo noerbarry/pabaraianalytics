@@ -235,10 +235,10 @@ def show_main_menu(user):
         
         elif chart_type == 'Vega-Lite Chart':
              st.subheader('Vega-Lite Chart')
-             uploaded_file = st.file_uploader('Unggah file JSON', type=['json'])
+             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
              if uploaded_file is not None:
-                 data = uploaded_file.read().decode('utf-8')
-                 chart = alt.Chart.from_json(data)
+                 data = pd.read_csv(uploaded_file)
+                 chart = alt.Chart(data)
 
                  # Menampilkan grafik Vega-Lite di layar menggunakan st.altair_chart()
                  st.altair_chart(chart, use_container_width=True)
