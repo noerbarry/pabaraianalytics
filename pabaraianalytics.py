@@ -108,7 +108,7 @@ def show_main_menu(user):
             logout()
     elif menu == 'Grafik':
         st.subheader('Pilih Jenis Grafik')
-        chart_type = st.selectbox('Jenis Grafik', ['Line Chart', 'Bar Chart', 'Histogram', 'Elements', 'Scatter Plot', 'Barfi Chart', 'Plotly Chart'])
+        chart_type = st.selectbox('Jenis Grafik', ['Line Chart', 'Bar Chart', 'Histogram', 'Word Cloud', 'Scatter Plot', 'Barfi Chart', 'Plotly Chart'])
         if chart_type == 'Line Chart':
             st.subheader('Grafik Line')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
@@ -186,7 +186,7 @@ def show_main_menu(user):
                     plt.savefig(img_buffer, format='png')
                     img_buffer.seek(0)
 
-        elif chart_type == 'Elements':
+        elif chart_type == 'Word Cloud':
              st.subheader('Grafik Elements')
              uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
 
