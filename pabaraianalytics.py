@@ -186,7 +186,7 @@ def show_main_menu(user):
                     plt.savefig(img_buffer, format='png')
                     img_buffer.seek(0)
 
-        elif chart_type == 'Elements':
+       elif chart_type == 'Elements':
              st.subheader('Grafik Elements')
              uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
              if uploaded_file is not None:
@@ -201,19 +201,22 @@ def show_main_menu(user):
                      # Filter out non-numeric values
                      data = data[pd.to_numeric(data[value_column], errors='coerce').notnull()]
 
-                     # Convert remaining values to integers
-                     data[value_column] = data[value_column].astype(int)
+                     if data.empty:
+                         st.warning('Tidak ada kata untuk ditampilkan dalam word cloud.')
+                     else:
+                         # Convert remaining values to integers
+                         data[value_column] = data[value_column].astype(int)
 
-                     # Membuat word cloud
-                     wordcloud = WordCloud().generate_from_frequencies(data.set_index(label_column)[value_column].to_dict())
+                         # Membuat word cloud
+                         wordcloud = WordCloud().generate_from_frequencies(data.set_index(label_column)[value_column].to_dict())
 
-                     # Menampilkan word cloud di layar menggunakan st.pyplot()
-                     st.pyplot(plt.imshow(wordcloud, interpolation='bilinear'))
-                     plt.axis('off')
+                         # Menampilkan word cloud di layar menggunakan st.pyplot()
+                         st.pyplot(plt.imshow(wordcloud, interpolation='bilinear'))
+                         plt.axis('off')
 
-                     # Simpan word cloud sebagai gambar
-                     wordcloud.to_file('wordcloud.png')
-                     st.success('Word cloud berhasil disimpan sebagai gambar.')
+                         # Simpan word cloud sebagai gambar
+                         wordcloud.to_file('wordcloud.png')
+                         st.success('Word cloud berhasil disimpan sebagai gambar.')
 
 
         elif chart_type == 'Scatter Plot':
