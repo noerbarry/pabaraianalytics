@@ -136,7 +136,7 @@ def show_main_menu(user):
             logout()
     elif menu == 'Grafik':
         st.subheader('Pilih Jenis Grafik')
-        chart_type = st.selectbox('Jenis Grafik', ['Line Chart', 'Bar Chart', 'Histogram', 'Word Cloud', 'Scatter Plot', 'Barfi Chart','Prophet Chart', 'Plotly Chart'])
+        chart_type = st.selectbox('Jenis Grafik', ['Line Chart', 'Bar Chart', 'Histogram', 'Word Cloud', 'Scatter Plot', 'Barfi Chart','Plotly Chart'])
         if chart_type == 'Line Chart':
             st.subheader('Grafik Line')
             uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
@@ -323,25 +323,6 @@ def show_main_menu(user):
                      b64_chart = base64.b64encode(img_buffer.read()).decode()
                      href = f'<a href="data:image/png;base64,{b64_chart}" download="barfi_chart.png">Unduh Grafik</a>'
                      st.write(href, unsafe_allow_html=True)
-
-        elif chart_type == 'Prophet Chart':
-            st.subheader('Grafik Prophet')
-            uploaded_file = st.file_uploader('Unggah file CSV', type=['csv'])
-            if uploaded_file is not None:
-                data = pd.read_csv(uploaded_file, delimiter=';')
-                st.dataframe(data)
-
-                # Jika tombol "Tampilkan Grafik" ditekan
-                if st.button('Tampilkan Grafik'):
-                    # Membuat grafik Prophet
-                    fig = create_prophet_chart(data)
-
-                    # Menampilkan grafik di layar menggunakan st.plotly_chart()
-                    st.plotly_chart(fig)
-
-                    # Mengunduh grafik
-                    st.markdown("### Download Grafik")
-                    download_chart(fig, 'prophet_chart.png') 
 
         elif chart_type == 'Plotly Chart':
             st.subheader('Plotly Chart')
