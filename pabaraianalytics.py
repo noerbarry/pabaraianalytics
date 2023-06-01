@@ -86,6 +86,15 @@ def logout():
     st.warning('Anda telah keluar dari akun.')
     st.experimental_rerun()
 
+def get_download_link(file_path):
+    with open(file_path, 'rb') as file:
+        contents = file.read()
+    base64_encoded = base64.b64encode(contents).decode('utf-8')
+    href = f'<a href="data:file/png;base64,{base64_encoded}" download="wordcloud.png">Klik di sini untuk mengunduh gambar word cloud</a>'
+    return href
+
+chart_type = st.selectbox('Pilih Jenis Grafik', ['Word Cloud', 'Elements'])
+      
 # Fungsi untuk mengunduh grafik
 def download_chart(chart, filename):
     img_data = io.BytesIO()
@@ -224,7 +233,7 @@ def show_main_menu(user):
                          # Simpan word cloud sebagai gambar
                          wordcloud.to_file('wordcloud.png')
                          st.success('Word cloud berhasil disimpan sebagai gambar.')
-                         st.markdown(download_chart('wordcloud.png'), unsafe_allow_html=True)
+                         st.markdown(get_download_link('wordcloud.png'), unsafe_allow_html=True)  
 
         elif chart_type == 'Scatter Plot':
              st.subheader('Scatter Plot')
