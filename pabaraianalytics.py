@@ -229,6 +229,7 @@ def show_main_menu(user):
 
                      # Mengunduh grafik
                      st.markdown("### Download Grafik")
+                     fig.write_image("scatter_plot.png")
                      download_chart(fig, 'scatter_plot.png') 
 
         elif chart_type == 'Plotly Chart':
